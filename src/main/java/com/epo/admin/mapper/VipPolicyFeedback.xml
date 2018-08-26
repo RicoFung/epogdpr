@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
+
+
+<mapper namespace="com.epo.admin.entity.VipPolicyFeedback">
+      <!-- 自动生成id策略 -->
+    <insert id="add" parameterType="com.epo.admin.entity.VipPolicyFeedback" useGeneratedKeys="true" keyProperty="id">  
+       	insert into vip_policy_feedback 
+       	( id_feedback, member_code, feedback_result, feedback_time, client_ip, client_sent_time, browser_agent) 
+       	values
+       	( #{idFeedback}, #{memberCode}, #{feedbackResult}, #{feedbackTime}, #{clientIp}, #{clientSentTime}, #{browserAgent})
+    </insert>  
+	
+	<delete id="del" parameterType="com.epo.admin.entity.VipPolicyFeedback">
+		delete from vip_policy_feedback
+		 where id_feedback = #{idFeedback}  	  
+	</delete>
+	
+	<update id="upd" parameterType="com.epo.admin.entity.VipPolicyFeedback">
+		update vip_policy_feedback set
+	           member_code = #{memberCode}, 
+	           feedback_result = #{feedbackResult}, 
+	           feedback_time = #{feedbackTime}, 
+	           client_ip = #{clientIp}, 
+	           client_sent_time = #{clientSentTime}, 
+	           browser_agent = #{browserAgent} 
+         where id_feedback = #{idFeedback}  	        
+	</update>
+  	
+	<resultMap type="com.epo.admin.entity.VipPolicyFeedback" id="result">
+        <result property="idFeedback" column="id_feedback"/>
+        <result property="memberCode" column="member_code"/>
+        <result property="feedbackResult" column="feedback_result"/>
+        <result property="feedbackTime" column="feedback_time"/>
+        <result property="clientIp" column="client_ip"/>
+        <result property="clientSentTime" column="client_sent_time"/>
+        <result property="browserAgent" column="browser_agent"/>
+	</resultMap>
+  	
+	<sql id="columns">
+		t.id_feedback, t.member_code, t.feedback_result, t.feedback_time, t.client_ip, t.client_sent_time, t.browser_agent 
+	</sql>
+	
+	<sql id="order">
+		<choose>
+			<when test="@chok.devwork.Ognl@isNotEmpty(sort)">
+				order by tt.<include refid="orderParse1"/> ${order}
+			</when>
+			<when test="@chok.devwork.Ognl@isNotEmpty(multiSort) and @chok.devwork.Ognl@isEmpty(sort)">
+				order by <foreach collection="multiSort" index="index" item="item" separator=",">tt.<include refid="orderParse2" /> ${item.sortOrder}</foreach>  
+			</when>
+		</choose>
+	</sql>
+	<sql id="orderParse1">
+		<if test="sort == 'idFeedback'">id_feedback</if>
+		<if test="sort == 'memberCode'">member_code</if>
+		<if test="sort == 'feedbackResult'">feedback_result</if>
+		<if test="sort == 'feedbackTime'">feedback_time</if>
+		<if test="sort == 'clientIp'">client_ip</if>
+		<if test="sort == 'clientSentTime'">client_sent_time</if>
+		<if test="sort == 'browserAgent'">browser_agent</if>
+	</sql>
+	<sql id="orderParse2">
+		<if test="item.sortName == 'idFeedback'">id_feedback</if>
+		<if test="item.sortName == 'memberCode'">member_code</if>
+		<if test="item.sortName == 'feedbackResult'">feedback_result</if>
+		<if test="item.sortName == 'feedbackTime'">feedback_time</if>
+		<if test="item.sortName == 'clientIp'">client_ip</if>
+		<if test="item.sortName == 'clientSentTime'">client_sent_time</if>
+		<if test="item.sortName == 'browserAgent'">browser_agent</if>
+	</sql>
+	
+	<sql id="page">
+		<if test="@chok.devwork.Ognl@isNotEmpty(offset) and @chok.devwork.Ognl@isNotEmpty(limit)"> limit #{offset,javaType=String,jdbcType=NUMERIC}, #{limit,javaType=String,jdbcType=NUMERIC} </if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>	      				
+	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode)"> and t.member_code like concat('%',#{memberCode},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackResult)"> and t.feedback_result like concat('%',#{feedbackResult},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackTime)"> and t.feedback_time like concat('%',#{feedbackTime},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(clientIp)"> and t.client_ip like concat('%',#{clientIp},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(clientSentTime)"> and t.client_sent_time like concat('%',#{clientSentTime},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(browserAgent)"> and t.browser_agent like concat('%',#{browserAgent},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.member_code like concat('%',#{search},'%') or t.feedback_result like concat('%',#{search},'%') or t.feedback_time like concat('%',#{search},'%') or t.client_ip like concat('%',#{search},'%') or t.client_sent_time like concat('%',#{search},'%') or t.browser_agent like concat('%',#{search},'%'))</if>	
+		</where>
+	</sql>	
+	
+	<select id="get" resultMap="result">
+		select <include refid="columns"/> 
+		  from vip_policy_feedback t 
+		 where id_feedback = #{idFeedback}  	  
+	</select>
+	
+	<select id="query" resultType="list" resultMap="result">
+		select tt.* from 
+		(
+			select <include refid="columns"/> from vip_policy_feedback t
+			<include refid="dynamicWhere" />
+		) tt
+		<include refid="order" />
+		<include refid="page" />
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(1) from vip_policy_feedback t
+		<include refid="dynamicWhere" />
+	</select>
+</mapper>  

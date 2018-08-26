@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
+
+<mapper namespace="com.epo.admin.entity.VipMemInfo">
+      <!-- 自动生成id策略 -->
+    <insert id="add" parameterType="com.epo.admin.entity.VipMemInfo">  
+       	insert into vip_mem_info 
+       	( member_code, email, join_date, store_code, country) 
+       	values
+       	( #{memberCode}, #{email}, #{joinDate}, #{storeCode}, #{country})
+    </insert>  
+	
+	<delete id="del" parameterType="com.epo.admin.entity.VipMemInfo">
+		delete from vip_mem_info
+		 where member_code = #{memberCode}  	  
+	</delete>
+	
+	<update id="upd" parameterType="com.epo.admin.entity.VipMemInfo">
+		update vip_mem_info set
+	           email = #{email}, 
+	           join_date = #{joinDate}, 
+	           store_code = #{storeCode}, 
+	           country = #{country} 
+         where member_code = #{memberCode}  	        
+	</update>
+  	
+	<resultMap type="com.epo.admin.entity.VipMemInfo" id="result">
+        <result property="memberCode" column="member_code"/>
+        <result property="email" column="email"/>
+        <result property="joinDate" column="join_date"/>
+        <result property="storeCode" column="store_code"/>
+        <result property="country" column="country"/>
+	</resultMap>
+  	
+	<sql id="columns">
+		t.member_code, t.email, t.join_date, t.store_code, t.country 
+	</sql>
+	
+	<sql id="order">
+		<choose>
+			<when test="@chok.devwork.Ognl@isNotEmpty(sort)">
+				order by tt.<include refid="orderParse1"/> ${order}
+			</when>
+			<when test="@chok.devwork.Ognl@isNotEmpty(multiSort) and @chok.devwork.Ognl@isEmpty(sort)">
+				order by <foreach collection="multiSort" index="index" item="item" separator=",">tt.<include refid="orderParse2" /> ${item.sortOrder}</foreach>  
+			</when>
+		</choose>
+	</sql>
+	<sql id="orderParse1">
+		<if test="sort == 'memberCode'">member_code</if>
+		<if test="sort == 'email'">email</if>
+		<if test="sort == 'joinDate'">join_date</if>
+		<if test="sort == 'storeCode'">store_code</if>
+		<if test="sort == 'country'">country</if>
+	</sql>
+	<sql id="orderParse2">
+		<if test="item.sortName == 'memberCode'">member_code</if>
+		<if test="item.sortName == 'email'">email</if>
+		<if test="item.sortName == 'joinDate'">join_date</if>
+		<if test="item.sortName == 'storeCode'">store_code</if>
+		<if test="item.sortName == 'country'">country</if>
+	</sql>
+	
+	<sql id="page">
+		<if test="@chok.devwork.Ognl@isNotEmpty(offset) and @chok.devwork.Ognl@isNotEmpty(limit)"> limit #{offset,javaType=String,jdbcType=NUMERIC}, #{limit,javaType=String,jdbcType=NUMERIC} </if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>	      				
+	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode)"> and t.member_code like concat('%',#{memberCode},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode2)"> and t.member_code = #{memberCode2}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(email)"> and t.email like concat('%',#{email},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(email2)"> and t.email = #{email2}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDate)"> and t.join_date like concat('%',#{joinDate},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(storeCode)"> and t.store_code like concat('%',#{storeCode},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(country)"> and t.country like concat('%',#{country},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.email like concat('%',#{search},'%') or t.join_date like concat('%',#{search},'%') or t.store_code like concat('%',#{search},'%') or t.country like concat('%',#{search},'%'))</if>	
+		</where>
+	</sql>	
+	
+	<select id="get" resultMap="result">
+		select <include refid="columns"/> 
+		  from vip_mem_info t 
+		 where member_code = #{memberCode}  	  
+	</select>
+	
+	<select id="query" resultType="list" resultMap="result">
+		select tt.* from 
+		(
+			select <include refid="columns"/> from vip_mem_info t
+			<include refid="dynamicWhere" />
+		) tt
+		<include refid="order" />
+		<include refid="page" />
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(1) from vip_mem_info t
+		<include refid="dynamicWhere" />
+	</select>
+</mapper>  
