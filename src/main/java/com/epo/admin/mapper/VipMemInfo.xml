@@ -33,7 +33,7 @@
 	</resultMap>
   	
 	<sql id="columns">
-		t.member_code, t.email, t.join_date, t.store_code, t.country 
+		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country 
 	</sql>
 	
 	<sql id="order">
@@ -71,7 +71,8 @@
 	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode2)"> and t.member_code = #{memberCode2}</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(email)"> and t.email like concat('%',#{email},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(email2)"> and t.email = #{email2}</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDate)"> and t.join_date like concat('%',#{joinDate},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDateFm)"> and t.join_date &gt;= #{joinDateFm}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDateTo)"> and t.join_date &lt;= #{joinDateTo}</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(storeCode)"> and t.store_code like concat('%',#{storeCode},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(country)"> and t.country like concat('%',#{country},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.email like concat('%',#{search},'%') or t.join_date like concat('%',#{search},'%') or t.store_code like concat('%',#{search},'%') or t.country like concat('%',#{search},'%'))</if>	

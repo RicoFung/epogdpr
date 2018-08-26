@@ -11,9 +11,9 @@
 <link rel="stylesheet" href="${statics}/res/AdminLTE/dist/css/AdminLTE.min.css"/>
 <link rel="stylesheet" href="${statics}/res/AdminLTE/dist/css/skins/_all-skins.min.css"/>
 <link rel="stylesheet" href="${statics}/res/AdminLTE/plugins/pace/pace.min.css"/>
-<%-- 与 bootstrap-edittable.js控件冲突
 <link rel="stylesheet" href="${statics}/res/AdminLTE/plugins/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="${statics}/res/AdminLTE/plugins/datepicker/datepicker3.css">
+<%-- 与 bootstrap-edittable.js控件冲突
 <link rel="stylesheet" href="${statics}/res/AdminLTE/plugins/timepicker/bootstrap-timepicker.min.css">
  --%>
 <link rel="stylesheet" href="${statics}/res/chok/css/chok.view.css"/>

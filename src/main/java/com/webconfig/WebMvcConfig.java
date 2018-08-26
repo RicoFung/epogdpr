@@ -15,6 +15,10 @@ public class WebMvcConfig implements WebMvcConfigurer
 	private String STATIC_PATH;
 	@Value("${static.doBase}")
 	private String STATIC_DOBASE;
+	@Value("${vstatic.path}")
+	private String VSTATIC_PATH;
+	@Value("${vstatic.doBase}")
+	private String VSTATIC_DOBASE;
 	
 	/**
 	 * 配置默认页
@@ -35,9 +39,8 @@ public class WebMvcConfig implements WebMvcConfigurer
         * 说明：增加虚拟路径(经过本人测试：在此处配置的虚拟路径，用springboot内置的tomcat时有效，
         * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
         */
-        registry
-        .addResourceHandler(STATIC_PATH)
-        .addResourceLocations("file:"+STATIC_DOBASE);
+        registry.addResourceHandler(STATIC_PATH).addResourceLocations("file:"+STATIC_DOBASE);
+        registry.addResourceHandler(VSTATIC_PATH).addResourceLocations(VSTATIC_DOBASE);
     }
 
     /**

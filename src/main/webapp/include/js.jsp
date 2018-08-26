@@ -18,6 +18,13 @@
 <script type="text/javascript" src="${statics}/res/bs/js/bootstrap-table-editable.min.js"></script>
 <script type="text/javascript" src="${statics}/res/bs/js/bootstrap-table-contextmenu.min.js"></script>
 <script type="text/javascript" src="${statics}/res/bs/js/bootstrap-table-multiple-sort.js"></script>
+
+<!-- date-range-picker -->
+<script src="${statics}/res/AdminLTE/plugins/daterangepicker/moment.min.js"></script>
+<script src="${statics}/res/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="${statics}/res/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+
 <script type="text/javascript" src="${statics}/res/chok/js/chok.base.js"></script>
 <script type="text/javascript" src="${statics}/res/chok/js/chok.validator.js"></script>
 <script type="text/javascript" src="${statics}/res/chok/js/chok.form.js"></script>

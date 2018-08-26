@@ -39,7 +39,7 @@
 </div>
 <!-- query form modal
 ======================================================================================================= -->
-<form id="form_query">
+<form id="form_query" style="overflow:scroll;" >
 <div id="modal_form_query" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -50,9 +50,26 @@
 	<div class="modal-body">
 		<div class="form-group">
 			<label for="f_memberCode">memberCode：</label><input type="text" class="form-control input-sm" id="f_memberCode"/>
+		</div>
+		<div class="form-group">
 			<label for="f_storeCode">storeCode：</label><input type="text" class="form-control input-sm" id="f_storeCode"/>
+		</div>
+		<div class="form-group">
 			<label for="f_country">country：</label><select class="form-control input-sm" id="f_country"></select>
-			<label for="f_joinDate">joinDate：</label><input type="text" class="form-control input-sm" id="f_joinDate"/>
+		</div>
+		<div class="form-group">
+			<label for="f_joinDateFm">joinDateFm：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_joinDateFm"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="f_joinDateTo">joinDateTo：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_joinDateTo"/>
+			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -85,13 +102,15 @@ $chok.view.query.config.setPreFormParams = function(){
 	$("#f_memberCode").val(typeof("${queryParams.f_memberCode}")=="undefined"?"":"${queryParams.f_memberCode}");
 	$("#f_storeCode").val(typeof("${queryParams.f_storeCode}")=="undefined"?"":"${queryParams.f_storeCode}");
 	$("#f_country").val(typeof("${queryParams.f_country}")=="undefined"?"":"${queryParams.f_country}");
-	$("#f_joinDate").val(typeof("${queryParams.f_joinDate}")=="undefined"?"":"${queryParams.f_joinDate}");
+	$("#f_joinDateFm").val(typeof("${queryParams.f_joinDateFm}")=="undefined"?"":"${queryParams.f_joinDateFm}");
+	$("#f_joinDateTo").val(typeof("${queryParams.f_joinDateTo}")=="undefined"?"":"${queryParams.f_joinDateTo}");
 };
 $chok.view.query.config.formParams = function(p){
 	p.memberCode = $("#f_memberCode").val();
 	p.storeCode = $("#f_storeCode").val();
 	p.country = $("#f_country").val();
-	p.joinDate = $("#f_joinDate").val();
+	p.joinDateFm = $("#f_joinDateFm").val();
+	p.joinDateTo = $("#f_joinDateTo").val();
     return p;
 };
 $chok.view.query.config.urlParams = function(){
@@ -99,7 +118,8 @@ $chok.view.query.config.urlParams = function(){
 			f_memberCode : $("#f_memberCode").val(),
 			f_storeCode : $("#f_storeCode").val(),
 			f_country : $("#f_country").val(),
-			f_joinDate : $("#f_joinDate").val()
+			f_joinDateFm : $("#f_joinDateFm").val(),
+			f_joinDateTo : $("#f_joinDateTo").val()
 	};
 };
 // config-定义表格列
@@ -138,6 +158,13 @@ $chok.view.query.fn.getColumns = function(){
 };
 // 用户自定义
 $chok.view.fn.customize = function(){
+    $('#f_joinDateFm').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    $('#f_joinDateTo').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    
 	var country_select = 
 		$("#f_country").DropDownSelect({
 			url:$ctx+"/dict/getCountrys"
