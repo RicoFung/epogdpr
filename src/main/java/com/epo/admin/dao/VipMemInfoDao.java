@@ -1,5 +1,8 @@
 package com.epo.admin.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -22,5 +25,11 @@ public class VipMemInfoDao extends BaseDao<VipMemInfo,Long>
 	public Class<VipMemInfo> getEntityClass()
 	{
 		return VipMemInfo.class;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, String>> getCountrys()
+	{
+		return (List<Map<String, String>>) query("getCountrys", null);
 	}
 }

@@ -1,5 +1,6 @@
 package com.epo.admin.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.epo.admin.entity.VipMemInfo;
+import com.epo.admin.entity.VipMemInfoErr;
 import com.epo.admin.service.VipMemInfoService;
 
 import chok.devwork.BaseController;
@@ -57,28 +59,32 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		return "/admin/vipmeminfo/imp.jsp";
 	}
 
+	@SuppressWarnings({ "unchecked", "serial" })
 	@RequestMapping("/imp2")
 	public void imp2(@RequestParam("myFile") CommonsMultipartFile files[])
 	{
 		try
 		{
-			Map<String, List<VipMemInfo>> resultMap = service.imp2(files);
-			if (resultMap.get("sucRows").size() > 0)
+			Map<String, Object> resultMap = service.imp2(files);
+			List<VipMemInfo> sucRows = ((List<VipMemInfo>)resultMap.get("sucRows"));
+			List<VipMemInfo> errRows = ((List<VipMemInfo>)resultMap.get("errRows"));
+			if (sucRows.size() > 0)
 				result.setSuccess(true);
 			else
 				result.setSuccess(false);
 				
-			result.setMsg("(success:"+resultMap.get("sucRows").size()+")");
-			result.setMsg(result.getMsg()+"(error:"+resultMap.get("errRows").size()+")");
+			result.setMsg("(Success: "+sucRows.size()+")");
+			result.setMsg(result.getMsg()+"(Error: "+errRows.size()+")");
 			
-			if (resultMap.get("errRows").size() > 0)
+			if (errRows.size() > 0)
 			{
-				System.out.println("----------------------------");
-				for(VipMemInfo po: resultMap.get("errRows"))
-				{
-					System.out.println(po.toString());
-				}
-				System.out.println("----------------------------");
+				result.setData(new HashMap<Object, Object>()
+				{{
+					put("rowid", resultMap.get("rowid"));
+				}});
+				log.info("----------------------------");
+				for(VipMemInfo po: errRows) log.info(po.toString());
+				log.info("----------------------------");
 			}
 		}
 		catch (Exception e)
@@ -161,6 +167,21 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		Map<String, Object> m = req.getParameterValueMap(false, true);
 		List<VipMemInfo> list = service.query(m);
 		exp(list, "xlsx");
+	}
+	
+	@RequestMapping("/expErr")
+	public void expErr()
+	{
+		Map<String, Object> m = req.getParameterValueMap(false, true);
+		List<VipMemInfoErr> list = service.queryErr(m);
+		String headerNames = "memberCode,email,joinDate,storeCode,country,msg";
+		String dataColumns = "memberCode,email,joinDate,storeCode,countryCn,msg";
+		exp(list, 
+			"error_rows", 
+			null, 
+			headerNames,
+			dataColumns,
+			"xlsx");
 	}
 
 	public static void main(String[] args)

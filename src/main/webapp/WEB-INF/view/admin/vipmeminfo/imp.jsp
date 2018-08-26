@@ -70,15 +70,16 @@ $(function(){
 	    $('#kv-error-2 ul').append(out);
 	    $('#kv-error-2').show(); 
 	}).on('fileuploaded', function(event, data, previewId, index) {
-        var form = data.form, files = data.files, extra = data.extra,
-        response = data.response, reader = data.reader;
-	    if(!response.success){
-	    	alert("上传失败，"+response.msg);
-	    	return;
-	    }
-	    //alert("上传文件成功！");
-	    alert(response.msg);
-		//location.href = "query?"+$chok.view.fn.getUrlParams("${queryParams}");
+        var form = data.form;
+        var files = data.files;
+        var extra = data.extra;
+        var response = data.response;
+        var reader = data.reader;
+        var msg = response.msg;
+        if (response.data.rowid != null) {
+        	msg += "&nbsp;&nbsp;<a href=\""+$ctx+"/admin/vipmeminfo/expErr?rowid="+response.data.rowid+"\" target=\"_blank\">导出异常数据</a>";
+        }
+    	$.alert({title: "提示", content: msg});
 	});
    /*  同步请求
    }).on('filebatchpreupload', function(event, data, id, index) {

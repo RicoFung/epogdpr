@@ -1,5 +1,8 @@
 package com.epo.admin.entity;
 
+import com.common.Dict;
+
+import chok.util.CollectionUtil;
 import chok.util.ReflectionUtil;
 
 /**
@@ -26,7 +29,7 @@ public class VipMemInfo implements java.io.Serializable
 	// 是否验证通过
 	private boolean passed = true;
 	// 错误信息
-	private String msg;
+	private String msg = "";
 
 	public void setMemberCode(java.lang.String value)
 	{
@@ -76,6 +79,11 @@ public class VipMemInfo implements java.io.Serializable
 	public java.lang.String getCountry()
 	{
 		return this.country;
+	}
+	
+	public java.lang.String getCountryCn()
+	{
+		return CollectionUtil.getKey(Dict.countryMap, this.country).get(0).toString();
 	}
 
 	public boolean getPassed()

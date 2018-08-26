@@ -36,38 +36,50 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		return dao;
 	}
 
-	public Map<String, List<VipMemInfo>> imp2(CommonsMultipartFile files[]) throws Exception
+	public Map<String, Object> imp2(CommonsMultipartFile files[]) throws Exception
 	{
 		List<String[]> list = POIUtil.readExcel(files[0]);
-		Map<String, List<VipMemInfo>> resultMap = validateRows(list);
-		if (resultMap.get("sucRows").size() > 0)
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, List<VipMemInfo>> resultRows = validateRows(list);
+		
+		List<VipMemInfo> sucRows = resultRows.get("sucRows");
+		resultMap.put("sucRows", sucRows);
+		List<VipMemInfo> errRows = resultRows.get("errRows");
+		resultMap.put("errRows", errRows);
+		
+		if (sucRows.size() > 0)
 		{
-			List<VipMemInfo> rows = resultMap.get("sucRows");
-			for (int j = 0; j < rows.size(); j++)
+			for (int j = 0; j < sucRows.size(); j++)
 			{
-				VipMemInfo po = rows.get(j);
+				VipMemInfo po = sucRows.get(j);
 				dao.add(po);
 			}
 		}
-		if (resultMap.get("errRows").size() > 0)
+		if (errRows.size() > 0)
 		{
-			List<VipMemInfo> rows = resultMap.get("errRows");
 			long rowid = UniqueId.genId();
-			for (int j = 0; j < rows.size(); j++)
+			for (int j = 0; j < errRows.size(); j++)
 			{
 				VipMemInfoErr po = new VipMemInfoErr();
-				po.setMemberCode(rows.get(j).getMemberCode());
-				po.setEmail(rows.get(j).getEmail());
-				po.setJoinDate(rows.get(j).getJoinDate());
-				po.setStoreCode(rows.get(j).getStoreCode());
-				po.setCountry(rows.get(j).getCountry());
-				po.setMsg(rows.get(j).getMsg());
-				po.setPassed(rows.get(j).getPassed());
+				po.setMemberCode(errRows.get(j).getMemberCode());
+				po.setEmail(errRows.get(j).getEmail());
+				po.setJoinDate(errRows.get(j).getJoinDate());
+				po.setStoreCode(errRows.get(j).getStoreCode());
+				po.setCountry(errRows.get(j).getCountry());
+				po.setMsg(errRows.get(j).getMsg());
+				po.setPassed(errRows.get(j).getPassed());
 				po.setRowid(rowid);
 				dao2.add(po);
 			}
+			resultMap.put("rowid", rowid);
 		}
 		return resultMap;
+	}
+	
+	public List<VipMemInfoErr> queryErr(Map<String, Object> m)
+	{
+		return dao2.query(m);
 	}
 
 	/**

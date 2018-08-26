@@ -49,10 +49,10 @@
 	</div>
 	<div class="modal-body">
 		<div class="form-group">
-			 <label for="f_memberCode">memberCode：</label><input type="text" class="form-control input-sm" id="f_memberCode"/>
-			 <label for="f_storeCode">storeCode：</label><input type="text" class="form-control input-sm" id="f_storeCode"/>
-			 <label for="f_country">country：</label><input type="text" class="form-control input-sm" id="f_country"/>
-			 <label for="f_joinDate">joinDate：</label><input type="text" class="form-control input-sm" id="f_joinDate"/>
+			<label for="f_memberCode">memberCode：</label><input type="text" class="form-control input-sm" id="f_memberCode"/>
+			<label for="f_storeCode">storeCode：</label><input type="text" class="form-control input-sm" id="f_storeCode"/>
+			<label for="f_country">country：</label><select class="form-control input-sm" id="f_country"></select>
+			<label for="f_joinDate">joinDate：</label><input type="text" class="form-control input-sm" id="f_joinDate"/>
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -109,7 +109,7 @@ $chok.view.query.config.tableColumns =
     {title:"email", field:"email", align:"center", valign:"middle", sortable:true},
     {title:"joinDate", field:"joinDate", align:"center", valign:"middle", sortable:true},
     {title:"storeCode", field:"storeCode", align:"center", valign:"middle", sortable:true},
-    {title:"country", field:"country", align:"center", valign:"middle", sortable:true}
+    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:true}
 ];
 // config-是否显示复合排序
 $chok.view.query.config.showMultiSort = true;
@@ -125,11 +125,11 @@ $chok.view.query.init.toolbar = function(){
 		location.href = "imp?"+$chok.view.query.fn.getUrlParams();
 	});
 	$("#bar_btn_exp").click(function(){
-		$chok.view.query.fn.exp("exp.action", 
+		$chok.view.query.fn.exp("exp", 
 				                "vip_mem_info",
-				                "vip_mem_info", 
+				                "", 
 				                "member_code,email,join_date,store_code,country",
-				                "memberCode,email,joinDate,storeCode,country");
+				                "memberCode,email,joinDate,storeCode,countryCn");
 	});
 };
 // OVERWRITE-表格第一二列
@@ -138,5 +138,9 @@ $chok.view.query.fn.getColumns = function(){
 };
 // 用户自定义
 $chok.view.fn.customize = function(){
+	var country_select = 
+		$("#f_country").DropDownSelect({
+			url:$ctx+"/dict/getCountrys"
+		});
 };
 </script>

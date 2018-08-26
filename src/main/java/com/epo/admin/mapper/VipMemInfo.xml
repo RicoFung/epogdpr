@@ -98,4 +98,9 @@
 		select count(1) from vip_mem_info t
 		<include refid="dynamicWhere" />
 	</select>
+	
+	<select id="getCountrys" resultType="java.util.HashMap">
+		select t.country as id, t.country as name from epogdpr.vip_mem_info t group by t.country
+	</select>
+	
 </mapper>  
