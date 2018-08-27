@@ -23,6 +23,7 @@
 		<button type="button" class="btn btn-default" id="bar_btn_query" pbtnId="pbtn_query2" data-toggle="modal" data-target="#modal_form_query"><i class="glyphicon glyphicon-search"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_imp" ><i class="glyphicon glyphicon-upload"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_exp" ><i class="glyphicon glyphicon-download"></i></button>
+		<button type="button" class="btn btn-default" id="bar_btn_email" ><i class="glyphicon glyphicon-envelope"></i></button>
 		</div>
 		<!-- data list
 		======================================================================================================= -->
@@ -83,7 +84,7 @@
 <%@ include file="/include/view-end.jsp"%>
 <!-- ======================================================================================================= -->
 <script type="text/javascript" src="${statics}/res/chok/js/chok.auth.js"></script>
-<script type="text/javascript" src="${statics}/res/chok/js/chok.view.query.js"></script>
+<script type="text/javascript" src="${statics}/res/chok/js/chok.view.query2.js"></script>
 <script type="text/javascript">
 /**********************************************************/
 /* 全局函数 */
@@ -151,11 +152,39 @@ $chok.view.query.init.toolbar = function(){
 				                "member_code,email,join_date,store_code,country",
 				                "memberCode,email,joinDate,storeCode,countryCn");
 	});
+	$("#bar_btn_email").click(function(){
+		if($chok.view.query.fn.getSelections().length<1) {
+			$.alert({title: "提示", type: "red", content: "没选择"});
+			return;
+		}
+		$.confirm({
+		    title: "提示",
+		    content: "确认发送邮件？",
+		    type: 'green',
+		    typeAnimated: true,
+		    buttons: {
+		        ok: function() {
+		        	console.info($chok.view.query.fn.getValSelectionsByKey("email")); 
+		    		$.post("email",{email:$chok.view.query.fn.getValSelectionsByKey("email")},function(result){
+		    	        $chok.view.query.callback.delRows(result); // 删除行回调
+		    	        if(!result.success) {
+		    	        	$.alert({title: "提示", type:"red", content: result.msg});
+		    	        	return;
+		    	        }
+	    	        	$.alert({title: "提示", type:"green", content: result.msg});
+		    	        $("#tb_list").bootstrapTable("refresh"); // 刷新table
+		    		});
+		        },
+		        close: function () {
+		        }
+		    }
+		});
+	});
 };
 // OVERWRITE-表格第一二列
-$chok.view.query.fn.getColumns = function(){
+/* $chok.view.query.fn.getColumns = function(){
 	return $.merge([],$chok.view.query.config.tableColumns);
-};
+}; */
 // 用户自定义
 $chok.view.fn.customize = function(){
     $('#f_joinDateFm').datepicker({

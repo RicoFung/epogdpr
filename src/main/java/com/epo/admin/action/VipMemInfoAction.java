@@ -97,6 +97,24 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		printJson(result);
 	}
 
+	@RequestMapping("/email")
+	public void email()
+	{
+		try
+		{
+			service.email(req.getStringArray("email[]"));
+			result.setSuccess(true);
+			result.setMsg("Success !");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+		}
+		printJson(result);
+	}
+	
 	@RequestMapping("/del")
 	public void del()
 	{

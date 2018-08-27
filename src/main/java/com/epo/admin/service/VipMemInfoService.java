@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -35,7 +38,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	{
 		return dao;
 	}
-
+	
 	public Map<String, Object> imp2(CommonsMultipartFile files[]) throws Exception
 	{
 		List<String[]> list = POIUtil.readExcel(files[0]);
@@ -80,6 +83,31 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	public List<VipMemInfoErr> queryErr(Map<String, Object> m)
 	{
 		return dao2.query(m);
+	}
+	
+//	public void email(String[] emails)
+//	{
+//		for(String email: emails)
+//		{
+//			System.out.println(email);
+//		}
+//	}
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+
+	@Test
+	public void email(String[] emails) throws Exception
+	{
+		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+		// 设置收件人，寄件人
+		simpleMailMessage.setTo(new String[] { "olefun@icloud.com" });
+		simpleMailMessage.setFrom("156812113@qq.com");
+		simpleMailMessage.setSubject("Spring Boot Mail 邮件测试【文本】");
+		simpleMailMessage.setText("这里是一段简单文本。");
+		// 发送邮件
+		mailSender.send(simpleMailMessage);
+
+		System.out.println("邮件已发送");
 	}
 
 	/**
@@ -199,5 +227,11 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			po.setMsg(po.getMsg() + "(Country can not be empty)");
 		}
 		return po.getPassed();
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		
 	}
 }

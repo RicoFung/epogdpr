@@ -77,9 +77,9 @@ $(function(){
         var reader = data.reader;
         var msg = response.msg;
         if (response.data.rowid != null) {
-        	msg += "&nbsp;&nbsp;<a href=\""+$ctx+"/admin/vipmeminfo/expErr?rowid="+response.data.rowid+"\" target=\"_blank\">导出异常数据</a>";
+        	msg += "&nbsp;&nbsp;<a href=\""+$ctx+"/admin/vipmeminfo/expErr?rowid="+response.data.rowid+"\" target=\"_blank\">【导出异常数据】</a>";
         }
-    	$.alert({title: "提示", content: msg});
+    	$.alert({title: "提示", type:"green", content: msg});
 	});
    /*  同步请求
    }).on('filebatchpreupload', function(event, data, id, index) {
