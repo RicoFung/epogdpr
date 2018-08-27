@@ -47,7 +47,7 @@ public class EmailTest
 		String deliver = "156812113@qq.com";
 		String[] receiver = { "ricofungcn@icloud.com" };
 		String[] carbonCopy = { "156812113@qq.com" };
-		String subject = "";
+		String subject = "test";
 		String template = "email/privacy_policy_en";
 
 		Context context = new Context();

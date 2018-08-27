@@ -5,13 +5,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.common.Dict;
 import com.epo.admin.dao.VipMemInfoDao;
@@ -32,6 +36,10 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	private VipMemInfoDao dao;
 	@Autowired
 	private VipMemInfoErrDao dao2;
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
+	TemplateEngine templateEngine;
 
 	@Override
 	public BaseDao<VipMemInfo, Long> getEntityDao()
@@ -85,29 +93,47 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		return dao2.query(m);
 	}
 	
-//	public void email(String[] emails)
-//	{
-//		for(String email: emails)
-//		{
-//			System.out.println(email);
-//		}
-//	}
-	@Autowired
-	private JavaMailSenderImpl mailSender;
-
-	@Test
-	public void email(String[] emails) throws Exception
+	public void email(String[] emails)
 	{
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		// 设置收件人，寄件人
-		simpleMailMessage.setTo(new String[] { "olefun@icloud.com" });
-		simpleMailMessage.setFrom("156812113@qq.com");
-		simpleMailMessage.setSubject("Spring Boot Mail 邮件测试【文本】");
-		simpleMailMessage.setText("这里是一段简单文本。");
-		// 发送邮件
-		mailSender.send(simpleMailMessage);
+		for(String email: emails)
+		{
+			System.out.println(email);
+		}
+		String deliver = "156812113@qq.com";
+		String[] receiver = { "ricofungcn@icloud.com" };
+		String[] carbonCopy = { "156812113@qq.com" };
+		String subject = "test";
+		String template = "email/privacy_policy_en";
 
-		System.out.println("邮件已发送");
+		Context context = new Context();
+
+		sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
+	}
+
+	/**
+	 * 发送模板邮件
+	 */
+	public void sendTemplateEmail(String deliver, String[] receiver, String[] carbonCopy, String subject,
+			String template, Context context)
+	{
+		try
+		{
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message);
+
+			String content = templateEngine.process(template, context);
+			messageHelper.setFrom(deliver);
+			messageHelper.setTo(receiver);
+			messageHelper.setCc(carbonCopy);
+			messageHelper.setSubject(subject);
+			messageHelper.setText(content, true);
+
+			mailSender.send(message);
+		}
+		catch (MessagingException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**

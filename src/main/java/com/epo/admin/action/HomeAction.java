@@ -21,7 +21,7 @@ public class HomeAction extends BaseController<Object>
 	@RequestMapping("/query")
 	public String query() 
 	{
-		return "/admin/home/query.jsp";
+		return "jsp/admin/home/query";
 	}
 	
 	@RequestMapping("/searchMenu")

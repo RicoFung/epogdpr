@@ -34,7 +34,7 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	public String add()
 	{
 		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/vipmeminfo/add.jsp";
+		return "jsp/admin/vipmeminfo/add";
 	}
 
 	@RequestMapping("/add2")
@@ -56,7 +56,7 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	public String imp()
 	{
 		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/vipmeminfo/imp.jsp";
+		return "jsp/admin/vipmeminfo/imp";
 	}
 
 	@SuppressWarnings({ "unchecked", "serial" })
@@ -137,7 +137,7 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	{
 		put("po", service.get(req.getLong("id")));
 		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/vipmeminfo/upd.jsp";
+		return "jsp/admin/vipmeminfo/upd";
 	}
 
 	@RequestMapping("/upd2")
@@ -160,14 +160,14 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	{
 		put("po", service.get(req.getLong("id")));
 		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/vipmeminfo/get.jsp";
+		return "jsp/admin/vipmeminfo/get";
 	}
 
 	@RequestMapping("/query")
 	public String query()
 	{
 		put("queryParams", req.getParameterValueMap(false, true));
-		return "/admin/vipmeminfo/query.jsp";
+		return "jsp/admin/vipmeminfo/query";
 	}
 
 	@RequestMapping("/query2")
