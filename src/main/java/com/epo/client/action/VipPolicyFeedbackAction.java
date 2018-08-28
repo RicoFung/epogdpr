@@ -1,4 +1,4 @@
-package com.epo.admin.action;
+package com.epo.client.action;
 
 import java.util.List;
 import java.util.Map;
@@ -8,14 +8,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.epo.client.entity.VipPolicyFeedback;
+import com.epo.client.service.VipPolicyFeedbackService;
+
 import chok.devwork.BaseController;
 import chok.util.CollectionUtil;
-import com.epo.admin.service.VipPolicyFeedbackService;
-import com.epo.admin.entity.VipPolicyFeedback;
 
 @Scope("prototype")
 @Controller
-@RequestMapping("/admin/vippolicyfeedback")
+@RequestMapping("/client/vippolicyfeedback")
 public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 {
 	@Autowired
@@ -25,7 +26,7 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 	public String add() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/vippolicyfeedback/add.jsp";
+		return "jsp/client/vippolicyfeedback/add.jsp";
 	}
 	@RequestMapping("/add2")
 	public void add2(VipPolicyFeedback po) 
@@ -64,7 +65,7 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 	{
 		put("po", service.get(req.getLong("id")));
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/vippolicyfeedback/upd.jsp";
+		return "jsp/client/vippolicyfeedback/upd.jsp";
 	}
 	@RequestMapping("/upd2")
 	public void upd2(VipPolicyFeedback po) 
@@ -84,16 +85,17 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 	@RequestMapping("/get")
 	public String get() 
 	{
-		put("po",service.get(req.getLong("id")));
-		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/vippolicyfeedback/get.jsp";
+		put("memberCode", req.getString("memberCode"));
+		String lang = req.getString("lang");
+		lang = lang.substring(0, 1).toUpperCase() + lang.substring(1);
+		return "jsp/client/vippolicyfeedback/get"+lang;
 	}
 
 	@RequestMapping("/query")
 	public String query() 
 	{
 		put("queryParams",req.getParameterValueMap(false, true));
-		return "/admin/vippolicyfeedback/query.jsp";
+		return "jsp/client/vippolicyfeedback/query.jsp";
 	}
 	
 	@RequestMapping("/query2")

@@ -7,7 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -29,6 +33,8 @@ import chok.util.ValidationUtil;
 @Service
 public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 {
+	static Logger log = LoggerFactory.getLogger(VipMemInfoService.class);
+	
 	@Autowired
 	private VipMemInfoDao vipMemInfoDao;
 	@Autowired
@@ -109,22 +115,34 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		// 按country分组选择template并发送邮件
 		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet()) 
 		{
-			// 邮箱列表去重
-		    List<String> emails = entry.getValue().stream().map(VipMemInfo::getEmail).distinct().collect(Collectors.toList());
-		    // 设置邮件信息-接收者
-		    String[] receiver = emails.toArray(new String[emails.size()]);
-		    // 设置邮件信息-抄送者
-		    String[] carbonCopy = null;
+			List<VipMemInfo> list = entry.getValue();
 		    // 设置邮件信息-发送者
 			String deliver = Dict.SPRING_MAIL_USERNAME;
 			// 设置邮件信息-主题
 			String subject = Dict.MAIL_SUBJECT;
-			// 设置邮件信息-模板
-			String template = Dict.MAIL_TEMPLATE+"_"+entry.getKey().split("_")[0];
-			// 设置邮件信息-模板上下文（用于模板变量赋值）
-			Context context = new Context();
-			// 发送邮件
-			MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
+			// 设置邮件信息-语言模板
+			String lang = entry.getKey().split("_")[0];
+			String template = Dict.MAIL_TEMPLATE+"_" + lang;
+			// 遍历 分组后的 List<VipMemInfo> 发送邮件
+			list.forEach(item->{
+				// 设置邮件信息-接收者
+				String[] receiver = new String[] {item.getEmail()};
+				// 设置邮件信息-抄送者
+				String[] carbonCopy = null;
+				// 设置邮件信息-模板上下文（用于模板变量赋值）
+				Context context = new Context();
+				context.setVariable("privacy_policy_url", Dict.MAIL_PRIVACY_POLICY_URL+"memberCode="+item.getMemberCode()+"&lang="+lang);
+				// 发送邮件
+				try
+				{
+					MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
+				}
+				catch (MessagingException e)
+				{
+					log.error(e.getMessage());
+					e.printStackTrace();
+				}
+			});
 		}
 	}
 

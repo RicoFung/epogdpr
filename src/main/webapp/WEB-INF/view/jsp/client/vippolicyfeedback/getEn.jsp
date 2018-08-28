@@ -518,9 +518,7 @@
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
 			<span style="font-family: Arial">You can also withdraw your
 				consent at any time </span><a name="_cmntref2"><span
-				style="font-family: Arial">by clicking here</span></a><a href="#_cmnt2"
-				style="text-decoration: none"><span
-				style="font-family: Arial; font-size: 8pt">[LPA2]</span></a><span
+				style="font-family: Arial">by clicking here</span></a><span
 				style="font-family: Arial">.</span>
 		</p>
 		<p
@@ -603,30 +601,6 @@
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
 			<span style="font-family: Arial">&#xa0;</span>
-		</p>
-	</div>
-	<hr style="width: 33%; height: 1px; text-align: left" />
-	<div id="_cmnt1"
-		style="-aw-comment-author: 'LPA-CGR'; -aw-comment-datetime: '2018-05-29T16:21:00'; -aw-comment-initial: 'LPA'">
-		<p
-			style="margin-top: 0pt; margin-bottom: 10pt; text-align: justify; font-size: 10pt">
-			<a href="#_cmntref1" style="text-decoration: none"><span
-				style="font-family: Arial; font-size: 8pt">[LPA1]</span></a><span
-				style="font-family: Arial">A clickable summary should allow
-				the </span><span style="font-family: Arial">data subjects</span><span
-				style="font-family: Arial"> to quickly access the topics they
-				wish to consult</span>
-		</p>
-	</div>
-	<div id="_cmnt2"
-		style="-aw-comment-author: 'LPA-CGR'; -aw-comment-datetime: '2018-05-29T17:08:00'; -aw-comment-initial: 'LPA'">
-		<p
-			style="margin-top: 0pt; margin-bottom: 10pt; text-align: justify; font-size: 10pt">
-			<a href="#_cmntref2" style="text-decoration: none"><span
-				style="font-family: Arial; font-size: 8pt">[LPA2]</span></a><span
-				style="font-family: Arial">Insert and h</span><span
-				style="font-family: Arial">ypertext link allowing the
-				customer to unsubscribe</span>
 		</p>
 	</div>
 </body>

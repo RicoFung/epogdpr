@@ -22,6 +22,7 @@ public class Dict
 	public static String SPRING_MAIL_USERNAME = PropertiesUtil.getValue("config/", "spring.mail.username");
 	public static String MAIL_SUBJECT = PropertiesUtil.getValue("config/", "mail.subject");
 	public static String MAIL_TEMPLATE = PropertiesUtil.getValue("config/", "mail.template");
+	public static String MAIL_PRIVACY_POLICY_URL = PropertiesUtil.getValue("config/", "mail.privacy.policy.url");
 	
 	// COUNTRY_MAP
 	public static Map<String, String> countryMap = new HashMap<String, String>()

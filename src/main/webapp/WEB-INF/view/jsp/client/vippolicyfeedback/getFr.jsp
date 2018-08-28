@@ -579,9 +579,7 @@
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; font-size: 10pt">
 			<span style="font-family: Arial">Vous pouvez Ã©galement retirer
 				votre consentement Ã  tout moment </span><a name="_cmntref1"><span
-				style="font-family: Arial">en cliquant ici</span></a><a href="#_cmnt1"
-				style="text-decoration: none"><span
-				style="font-family: Arial; font-size: 8pt">[LPA1]</span></a><span
+				style="font-family: Arial">en cliquant ici</span></a><span
 				style="font-family: Arial">.</span>
 		</p>
 		<p
@@ -668,18 +666,6 @@
 				totalitÃ© ou en partie</span><span style="font-family: Arial">. Vous
 				serez averti Ã  chaque fois que nous effectuerons une modification
 				substantielle de ce document.</span>
-		</p>
-	</div>
-	<hr style="width: 33%; height: 1px; text-align: left" />
-	<div id="_cmnt1"
-		style="-aw-comment-author: 'LPA-CGR'; -aw-comment-datetime: '2018-05-23T14:20:00'; -aw-comment-initial: 'LPA'">
-		<p
-			style="margin-top: 0pt; margin-bottom: 10pt; text-align: justify; font-size: 10pt">
-			<a href="#_cmntref1" style="text-decoration: none"><span
-				style="font-family: Arial; font-size: 8pt">[LPA1]</span></a><span
-				style="font-family: Arial">Insert and h</span><span
-				style="font-family: Arial">ypertext link allowing the
-				customer to unsubscribe</span>
 		</p>
 	</div>
 </body>
