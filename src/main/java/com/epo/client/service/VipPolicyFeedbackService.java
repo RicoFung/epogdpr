@@ -18,4 +18,9 @@ public class VipPolicyFeedbackService extends BaseService<VipPolicyFeedback,Long
 	{
 		return dao;
 	}
+	
+	public void feedback(VipPolicyFeedback po)
+	{
+		
+	}
 }

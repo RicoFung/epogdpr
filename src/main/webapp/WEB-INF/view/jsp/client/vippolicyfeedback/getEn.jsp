@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/include/ctx.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -41,7 +42,7 @@
 				style="font-family: Arial">olicy (</span><span
 				style="font-family: Arial">hereinafter </span><span
 				style="font-family: Arial">the </span><span
-				style="font-family: Arial">âPrivacy Policyâ</span><span
+				style="font-family: Arial">Privacy Policy</span><span
 				style="font-family: Arial">) is intended to inform you how we
 				collect and </span><span style="font-family: Arial">process any </span><span
 				style="font-family: Arial">information that could</span><span
@@ -54,9 +55,10 @@
 				style="font-family: Arial">your </span><span
 				style="font-family: Arial">date of birth or other information
 				you have provided to us (</span><span style="font-family: Arial">hereinafter
-				your </span><span style="font-family: Arial">â</span><span
+				your </span><span style="font-family: Arial"></span><span
 				style="font-family: Arial">Personal Data</span><span
-				style="font-family: Arial">â</span><span style="font-family: Arial">).</span>
+				style="font-family: Arial"></span><span
+				style="font-family: Arial">).</span>
 		</p>
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
@@ -176,9 +178,10 @@
 				style="font-family: Arial">631</span><span
 				style="font-family: Arial"> </span><span style="font-family: Arial">775,
 				having its registered office at 38 rue du Temple, 75004 Paris
-				(hereinafter </span><span style="font-family: Arial">â</span><span
+				(hereinafter </span><span style="font-family: Arial"></span><span
 				style="font-family: Arial">V&amp;A Fashion</span><span
-				style="font-family: Arial">â</span><span style="font-family: Arial">).</span>
+				style="font-family: Arial"></span><span
+				style="font-family: Arial">).</span>
 		</p>
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
@@ -192,12 +195,12 @@
 				information technology, data files and civil liberties</span><span
 				style="font-family: Arial">, in its current version (here</span><span
 				style="font-family: Arial">in</span><span style="font-family: Arial">after
-				the </span><span style="font-family: Arial">âFrench Data Protection
-				Actâ</span><span style="font-family: Arial">) as well as the </span><span
-				style="font-family: Arial">European Regulation 2016/679 of 27
-				April 2016 </span><span style="font-family: Arial">or General Data
-				Protection Regulation (</span><span style="font-family: Arial">hereinafter
-				the âGDPRâ)</span><span style="font-family: Arial">.</span>
+				the </span><span style="font-family: Arial">French Data
+				Protection Act</span><span style="font-family: Arial">) as well
+				as the </span><span style="font-family: Arial">European Regulation
+				2016/679 of 27 April 2016 </span><span style="font-family: Arial">or
+				General Data Protection Regulation (</span><span style="font-family: Arial">hereinafter
+				the GDPR)</span><span style="font-family: Arial">.</span>
 		</p>
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
@@ -212,8 +215,7 @@
 		</h1>
 		<p
 			style="margin-top: 0pt; margin-bottom: 10pt; text-align: justify; line-height: 115%; font-size: 10pt">
-			<br />
-			<span style="font-family: Arial">We </span><span
+			<br /> <span style="font-family: Arial">We </span><span
 				style="font-family: Arial">collect your Personal Data only
 				through the form distributed in MO&amp;Co stores and corners, which
 				you have completed and given to our staff ("the Form").</span>
@@ -365,7 +367,7 @@
 				style="font-family: Arial">Other companies in our group, for
 					governance purposes and to monitor the group's activity. Here is
 					the list of the group's local entities and their addresses: </span>
-			<ul type="circle"
+				<ul type="circle"
 					style="margin-right: 0pt; margin-left: 0pt; padding-left: 0pt">
 					<li
 						style="margin-left: 10.45pt; padding-left: 7pt; -aw-font-family: 'Courier New'; -aw-font-weight: normal; -aw-number-format: 'o'"><span
@@ -602,6 +604,10 @@
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: justify; line-height: 115%; font-size: 10pt">
 			<span style="font-family: Arial">&#xa0;</span>
 		</p>
+	</div>
+	<div align="center">
+		<a href="${ctx}/client/vippolicyfeedback/feedback?memberCode=${memberCode}&result=R" style="font-family: Arial; font-size:30; margin: 10px;">Reject</a>
+		<a href="${ctx}/client/vippolicyfeedback/feedback?memberCode=${memberCode}&result=A" style="font-family: Arial; font-size:30; margin: 10px;">Agree</a>
 	</div>
 </body>
 </html>

@@ -668,5 +668,9 @@
 				substantielle de ce document.</span>
 		</p>
 	</div>
+	<div align="center">
+		<a href="${ctx}/client/vippolicyfeedback/oppose?memberCode=${memberCode}" style="font-family: Arial; font-size:30; margin: 10px;">Rejeter</a>
+		<a href="${ctx}/client/vippolicyfeedback/agree?memberCode=${memberCode}" style="font-family: Arial; font-size:30; margin: 10px;">D'accord</a>
+	</div>
 </body>
 </html>
