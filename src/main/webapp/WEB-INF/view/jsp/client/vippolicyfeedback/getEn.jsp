@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="generator" content="Aspose.Words for .NET 17.1.0.0" />
+<script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
 <title></title>
 </head>
 <body>

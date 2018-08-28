@@ -1,9 +1,11 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/include/ctx.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="generator" content="Aspose.Words for .NET 17.1.0.0" />
+<script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
 <title></title>
 </head>
 <body>
