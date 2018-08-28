@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.epo.admin.entity.VipMemInfo;
 import com.epo.admin.entity.VipMemInfoErr;
 import com.epo.admin.service.VipMemInfoService;
 
 import chok.devwork.BaseController;
-import chok.util.CollectionUtil;
 
 @Scope("prototype")
 @Controller
@@ -29,28 +29,6 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	
 	@Autowired
 	private VipMemInfoService service;
-
-	@RequestMapping("/add")
-	public String add()
-	{
-		put("queryParams", req.getParameterValueMap(false, true));
-		return "jsp/admin/vipmeminfo/add";
-	}
-
-	@RequestMapping("/add2")
-	public void add2(VipMemInfo po)
-	{
-		try
-		{
-			service.add(po);
-			print("1");
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			print("0:" + e.getMessage());
-		}
-	}
 
 	@RequestMapping("/imp")
 	public String imp()
@@ -97,17 +75,23 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		printJson(result);
 	}
 
-	@RequestMapping("/email")
-	public void email()
+	@RequestMapping("/sendEmail")
+	public void sendEmail()
 	{
 		try
 		{
-			service.email(req.getStringArray("email[]"));
+			List<VipMemInfo> vipMemInfos = JSON.parseArray(req.getString("jsonparams"), VipMemInfo.class);
+			for(VipMemInfo v : vipMemInfos)
+			{
+				log.info("==> jsonparams" + v.toString());
+			}
+			service.sendEmail(vipMemInfos);
 			result.setSuccess(true);
 			result.setMsg("Success !");
 		}
 		catch (Exception e)
 		{
+			log.error(e.getMessage());
 			e.printStackTrace();
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
@@ -115,46 +99,6 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		printJson(result);
 	}
 	
-	@RequestMapping("/del")
-	public void del()
-	{
-		try
-		{
-			service.del(CollectionUtil.toLongArray(req.getLongArray("id[]", 0l)));
-			result.setSuccess(true);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			result.setSuccess(false);
-			result.setMsg(e.getMessage());
-		}
-		printJson(result);
-	}
-
-	@RequestMapping("/upd")
-	public String upd()
-	{
-		put("po", service.get(req.getLong("id")));
-		put("queryParams", req.getParameterValueMap(false, true));
-		return "jsp/admin/vipmeminfo/upd";
-	}
-
-	@RequestMapping("/upd2")
-	public void upd2(VipMemInfo po)
-	{
-		try
-		{
-			service.upd(po);
-			print("1");
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			print("0:" + e.getMessage());
-		}
-	}
-
 	@RequestMapping("/get")
 	public String get()
 	{

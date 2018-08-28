@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.epo.admin.dao.VipMemInfoDao;
 
+import chok.util.PropertiesUtil;
+
 @SuppressWarnings("serial")
 @Component
 public class Dict 
@@ -16,6 +18,12 @@ public class Dict
 	@Autowired
 	private VipMemInfoDao dao;
 	
+	// SPRING_MAIL_USERNAME
+	public static String SPRING_MAIL_USERNAME = PropertiesUtil.getValue("config/", "spring.mail.username");
+	public static String MAIL_SUBJECT = PropertiesUtil.getValue("config/", "mail.subject");
+	public static String MAIL_TEMPLATE = PropertiesUtil.getValue("config/", "mail.template");
+	
+	// COUNTRY_MAP
 	public static Map<String, String> countryMap = new HashMap<String, String>()
 	{
 		{

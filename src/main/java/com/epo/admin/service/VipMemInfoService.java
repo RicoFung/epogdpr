@@ -4,20 +4,17 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.common.Dict;
+import com.common.MailUtil;
 import com.epo.admin.dao.VipMemInfoDao;
 import com.epo.admin.dao.VipMemInfoErrDao;
 import com.epo.admin.entity.VipMemInfo;
@@ -33,40 +30,42 @@ import chok.util.ValidationUtil;
 public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 {
 	@Autowired
-	private VipMemInfoDao dao;
+	private VipMemInfoDao vipMemInfoDao;
 	@Autowired
-	private VipMemInfoErrDao dao2;
-	@Autowired
-	private JavaMailSender mailSender;
-	@Autowired
-	TemplateEngine templateEngine;
+	private VipMemInfoErrDao vipMemInfoErrDao;
 
 	@Override
 	public BaseDao<VipMemInfo, Long> getEntityDao()
 	{
-		return dao;
+		return vipMemInfoDao;
 	}
 	
+	/**
+	 * 上传
+	 * @param files
+	 * @return Map<String, Object> {"sucRows":List<VipMemInfo>, "errRows":List<VipMemInfoErr>, "rowid":rowid}
+	 * @throws Exception
+	 */
 	public Map<String, Object> imp2(CommonsMultipartFile files[]) throws Exception
 	{
 		List<String[]> list = POIUtil.readExcel(files[0]);
-		
+		// 校验数据
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, List<VipMemInfo>> resultRows = validateRows(list);
-		
+		// sucRows
 		List<VipMemInfo> sucRows = resultRows.get("sucRows");
 		resultMap.put("sucRows", sucRows);
-		List<VipMemInfo> errRows = resultRows.get("errRows");
-		resultMap.put("errRows", errRows);
-		
 		if (sucRows.size() > 0)
 		{
 			for (int j = 0; j < sucRows.size(); j++)
 			{
 				VipMemInfo po = sucRows.get(j);
-				dao.add(po);
+				vipMemInfoDao.add(po);
 			}
 		}
+		// errRows
+		List<VipMemInfo> errRows = resultRows.get("errRows");
+		resultMap.put("errRows", errRows);
 		if (errRows.size() > 0)
 		{
 			long rowid = UniqueId.genId();
@@ -81,58 +80,51 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				po.setMsg(errRows.get(j).getMsg());
 				po.setPassed(errRows.get(j).getPassed());
 				po.setRowid(rowid);
-				dao2.add(po);
+				vipMemInfoErrDao.add(po);
 			}
 			resultMap.put("rowid", rowid);
 		}
 		return resultMap;
 	}
 	
+	/**
+	 * 获取上传时，不合法数据
+	 * @param m
+	 * @return
+	 */
 	public List<VipMemInfoErr> queryErr(Map<String, Object> m)
 	{
-		return dao2.query(m);
+		return vipMemInfoErrDao.query(m);
 	}
 	
-	public void email(String[] emails)
-	{
-		for(String email: emails)
-		{
-			System.out.println(email);
-		}
-		String deliver = "156812113@qq.com";
-		String[] receiver = { "ricofungcn@icloud.com" };
-		String[] carbonCopy = { "156812113@qq.com" };
-		String subject = "test";
-		String template = "email/privacy_policy_en";
-
-		Context context = new Context();
-
-		sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
-	}
-
 	/**
-	 * 发送模板邮件
+	 * 发送邮件
+	 * @param sendEmail
+	 * @throws Exception 
 	 */
-	public void sendTemplateEmail(String deliver, String[] receiver, String[] carbonCopy, String subject,
-			String template, Context context)
+	public void sendEmail(List<VipMemInfo> vipMemInfos) throws Exception
 	{
-		try
+		// 按country分组
+		Map<String, List<VipMemInfo>> vipMemInfoGroup =vipMemInfos.stream().collect(Collectors.groupingBy(VipMemInfo::getCountry));
+		// 按country分组选择template并发送邮件
+		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet()) 
 		{
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message);
-
-			String content = templateEngine.process(template, context);
-			messageHelper.setFrom(deliver);
-			messageHelper.setTo(receiver);
-			messageHelper.setCc(carbonCopy);
-			messageHelper.setSubject(subject);
-			messageHelper.setText(content, true);
-
-			mailSender.send(message);
-		}
-		catch (MessagingException e)
-		{
-			e.printStackTrace();
+			// 邮箱列表去重
+		    List<String> emails = entry.getValue().stream().map(VipMemInfo::getEmail).distinct().collect(Collectors.toList());
+		    // 设置邮件信息-接收者
+		    String[] receiver = emails.toArray(new String[emails.size()]);
+		    // 设置邮件信息-抄送者
+		    String[] carbonCopy = null;
+		    // 设置邮件信息-发送者
+			String deliver = Dict.SPRING_MAIL_USERNAME;
+			// 设置邮件信息-主题
+			String subject = Dict.MAIL_SUBJECT;
+			// 设置邮件信息-模板
+			String template = Dict.MAIL_TEMPLATE+"_"+entry.getKey().split("_")[0];
+			// 设置邮件信息-模板上下文（用于模板变量赋值）
+			Context context = new Context();
+			// 发送邮件
+			MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
 		}
 	}
 
@@ -187,7 +179,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		}
 		else
 		{
-			int count = dao.getCount(new HashMap<String, Object>()
+			int count = vipMemInfoDao.getCount(new HashMap<String, Object>()
 			{
 				private static final long serialVersionUID = 1L;
 				{
@@ -213,7 +205,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				po.setPassed(false);
 				po.setMsg(po.getMsg() + "(Email format is illegal)");
 			}
-			int count = dao.getCount(new HashMap<String, Object>()
+			int count = vipMemInfoDao.getCount(new HashMap<String, Object>()
 			{
 				private static final long serialVersionUID = 1L;
 				{
@@ -255,9 +247,4 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		return po.getPassed();
 	}
 	
-	
-	public static void main(String[] args)
-	{
-		
-	}
 }

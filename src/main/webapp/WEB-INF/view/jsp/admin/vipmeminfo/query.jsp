@@ -130,7 +130,8 @@ $chok.view.query.config.tableColumns =
     {title:"email", field:"email", align:"center", valign:"middle", sortable:true},
     {title:"joinDate", field:"joinDate", align:"center", valign:"middle", sortable:true},
     {title:"storeCode", field:"storeCode", align:"center", valign:"middle", sortable:true},
-    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:true}
+    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:true},
+    {title:"country", field:"country", align:"center", valign:"middle", sortable:true}
 ];
 // config-是否显示复合排序
 $chok.view.query.config.showMultiSort = true;
@@ -164,8 +165,13 @@ $chok.view.query.init.toolbar = function(){
 		    typeAnimated: true,
 		    buttons: {
 		        ok: function() {
-		        	console.info($chok.view.query.fn.getValSelectionsByKey("email")); 
-		    		$.post("email",{email:$chok.view.query.fn.getValSelectionsByKey("email")},function(result){
+		        	var keys = ["memberCode", "email", "country"];
+		        	console.info($chok.view.query.fn.getValSelectionsByKey2(keys)); //return;
+		    		$.post("sendEmail", 
+    				{
+		    			jsonparams: JSON.stringify($chok.view.query.fn.getValSelectionsByKey2(keys))
+    				},
+    				function(result){
 		    	        $chok.view.query.callback.delRows(result); // 删除行回调
 		    	        if(!result.success) {
 		    	        	$.alert({title: "提示", type:"red", content: result.msg});
