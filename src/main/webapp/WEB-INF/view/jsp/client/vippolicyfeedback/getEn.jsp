@@ -672,7 +672,7 @@ $(function(){
 			<span style="font-family: Arial">&#xa0;</span>
 		</p>
 	</div>
-	<div align="center">
+	<div align="center" style="margin-bottom: 100px">
 		<a id="btn_reject" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Reject</a>
 		<a id="btn_agree" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Agree</a>
 	</div>

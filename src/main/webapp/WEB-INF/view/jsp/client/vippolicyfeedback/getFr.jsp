@@ -736,7 +736,7 @@ $(function(){
 				substantielle de ce document.</span>
 		</p>
 	</div>
-	<div align="center">
+	<div align="center" style="margin-bottom: 100px">
 		<a id="btn_reject" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Rejeter</a>
 		<a id="btn_agree" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">D'accord</a>
 	</div>
