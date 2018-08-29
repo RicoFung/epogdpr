@@ -146,31 +146,4 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 			"xlsx");
 	}
 
-	public static void main(String[] args)
-	{
-		// 设置默认语言环境
-		// Locale.setDefault(Locale.FRANCE);
-		// Locale l = Locale.getDefault();
-		// System.out.println("默认语言地区代码: " + l.toString());
-
-//		Locale chinaLocale;
-//		Locale newLocale, testLocale;
-//		Locale locales[] = Locale.getAvailableLocales();
-//		for (Locale locale : locales)
-//		{
-//			// 获取系统支持的语言和国家
-//			System.out.println("Language：" + locale.getLanguage() + "   Country:" + locale.getCountry());
-//			// 预览该国家语言
-//			newLocale = new Locale(locale.getLanguage(), locale.getCountry());
-//			Locale.setDefault(newLocale);
-//			testLocale = Locale.getDefault();
-//			System.out.println(
-//					"     Display:" + testLocale.getDisplayLanguage() + "   " + testLocale.getDisplayCountry());
-//			// 用中文表示该国家语言
-//			Locale.setDefault(new Locale("zh", "CN"));
-//			chinaLocale = Locale.getDefault();
-//			System.out.println(
-//					"     Display:" + testLocale.getDisplayLanguage() + "   " + testLocale.getDisplayCountry());
-//		}
-	}
 }

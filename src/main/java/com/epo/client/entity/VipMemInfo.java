@@ -1,10 +1,9 @@
-package com.epo.admin.entity;
-
-import java.util.List;
+package com.epo.client.entity;
 
 import com.common.Dict;
 
 import chok.util.CollectionUtil;
+import chok.util.ReflectionUtil;
 
 /**
  *
@@ -31,8 +30,6 @@ public class VipMemInfo implements java.io.Serializable
 	private boolean passed = true;
 	// 错误信息
 	private String msg = "";
-	// VipPolicyFeedback
-	private List<VipPolicyFeedback> vipPolicyFeedbacks;
 
 	public void setMemberCode(java.lang.String value)
 	{
@@ -119,16 +116,6 @@ public class VipMemInfo implements java.io.Serializable
 		this.rowid = rowid;
 	}
 
-	public List<VipPolicyFeedback> getVipPolicyFeedbacks()
-	{
-		return vipPolicyFeedbacks;
-	}
-
-	public void setVipPolicyFeedbacks(List<VipPolicyFeedback> vipPolicyFeedbacks)
-	{
-		this.vipPolicyFeedbacks = vipPolicyFeedbacks;
-	}
-
 	@Override
 	public String toString()
 	{
@@ -136,4 +123,9 @@ public class VipMemInfo implements java.io.Serializable
 				+ storeCode + ", country=" + country + ", passed=" + passed + ", msg=" + msg + "]";
 	}
 
+
+	public static void main(String[] args)
+	{
+		System.out.println(ReflectionUtil.getAllFieldNames(VipMemInfo.class));
+	}
 }

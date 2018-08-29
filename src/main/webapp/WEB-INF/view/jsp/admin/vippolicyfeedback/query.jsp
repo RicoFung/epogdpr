@@ -48,7 +48,43 @@
 	</div>
 	<div class="modal-body">
 		<div class="form-group">
-			 <label for="f_tcField">tcField：</label><input type="text" class="form-control input-sm" id="f_tcField"/>
+			<label for="f_memberCode">memberCode：</label><input type="text" class="form-control input-sm" id="f_memberCode"/>
+		</div>
+		<div class="form-group">
+			<label for="f_feedbackResult">feedbackResult：</label>
+			<select class="form-control input-sm" id="f_feedbackResult">
+				<option value="">请选择</option>
+				<option value="A">A</option>
+				<option value="R">R</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="f_feedbackTimeFm">feedbackTimeFm：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_feedbackTimeFm"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="f_feedbackTimeTo">feedbackTimeTo：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_feedbackTimeTo"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="f_clientSentTimeFm">clientSentTimeFm：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_clientSentTimeFm"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="f_clientSentTimeTo">clientSentTimeTo：</label>
+			<div class="input-group">
+				<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+				<input type="text" class="form-control pull-right" id="f_clientSentTimeTo"/>
+			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -62,7 +98,7 @@
 <%@ include file="/include/view-end.jsp"%>
 <!-- ======================================================================================================= -->
 <script type="text/javascript" src="${statics}/res/chok/js/chok.auth.js"></script>
-<script type="text/javascript" src="${statics}/res/chok/js/chok.view.query.js"></script>
+<script type="text/javascript" src="${statics}/res/chok/js/chok.view.query2.js"></script>
 <script type="text/javascript">
 /**********************************************************/
 /* 全局函数 */
@@ -78,15 +114,25 @@ $(function() {
 /* 初始化配置 */
 /**********************************************************/
 $chok.view.query.config.setPreFormParams = function(){
-	$("#f_tcField").val(typeof("${queryParams.f_tcField}")=="undefined"?"":"${queryParams.f_tcField}");
+	$("#f_memberCode").val(typeof("${queryParams.f_memberCode}")=="undefined"?"":"${queryParams.f_memberCode}");
 };
 $chok.view.query.config.formParams = function(p){
-	p.tcField = $("#f_tcField").val();
+	p.memberCode = $("#f_memberCode").val();
+	p.feedbackResult = $("#f_feedbackResult").val();
+	p.feedbackTimeFm = $("#f_feedbackTimeFm").val();
+	p.feedbackTimeTo = $("#f_feedbackTimeTo").val();
+	p.clientSentTimeFm = $("#f_clientSentTimeFm").val();
+	p.clientSentTimeTo = $("#f_clientSentTimeTo").val();
     return p;
 };
 $chok.view.query.config.urlParams = function(){
 	return {
-			f_tcField : $("#f_tcField").val()
+		f_memberCode : $("#f_memberCode").val(),
+		f_feedbackResult : $("#f_feedbackResult").val(),
+		f_feedbackTimeFm : $("#f_feedbackTimeFm").val(),
+		f_feedbackTimeTo : $("#f_feedbackTimeTo").val(),
+		f_clientSentTimeFm : $("#f_clientSentTimeFm").val(),
+		f_clientSentTimeTo : $("#f_clientSentTimeTo").val(),
 	};
 };
 // config-定义表格列
@@ -113,9 +159,9 @@ $chok.view.query.init.toolbar = function(){
 	$("#bar_btn_exp").click(function(){
 		$chok.view.query.fn.exp("exp.action", 
 				                "vip_policy_feedback",
-				                "vip_policy_feedback", 
-				                "id_feedback,member_code,feedback_result,feedback_time,client_ip,client_sent_time,browser_agent",
-				                "idFeedback,memberCode,feedbackResult,feedbackTime,clientIp,clientSentTime,browserAgent");
+				                "", 
+				                "member_code,feedback_result,feedback_time,client_ip,client_sent_time,browser_agent",
+				                "memberCode,feedbackResult,feedbackTime,clientIp,clientSentTime,browserAgent");
 	});
 };
 // OVERWRITE-表格第一二列
@@ -124,5 +170,17 @@ $chok.view.query.fn.getColumns = function(){
 };
 // 用户自定义
 $chok.view.fn.customize = function(){
+    $('#f_feedbackTimeFm').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    $('#f_feedbackTimeTo').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    $('#f_clientSentTimeFm').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    $('#f_clientSentTimeTo').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
 };
 </script>

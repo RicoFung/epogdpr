@@ -6,6 +6,7 @@ package com.epo.admin.entity;
  * @version 1.0
  * @since 1.0
  * */
+@SuppressWarnings("serial")
 public class VipPolicyFeedback implements java.io.Serializable
 {
     // 标识       db_column: id_feedback 

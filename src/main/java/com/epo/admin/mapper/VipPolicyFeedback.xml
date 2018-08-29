@@ -3,32 +3,9 @@
 
 
 <mapper namespace="com.epo.admin.entity.VipPolicyFeedback">
-      <!-- 自动生成id策略 -->
-    <insert id="add" parameterType="com.epo.admin.entity.VipPolicyFeedback" useGeneratedKeys="true" keyProperty="id">  
-       	insert into vip_policy_feedback 
-       	( id_feedback, member_code, feedback_result, feedback_time, client_ip, client_sent_time, browser_agent) 
-       	values
-       	( #{idFeedback}, #{memberCode}, #{feedbackResult}, #{feedbackTime}, #{clientIp}, #{clientSentTime}, #{browserAgent})
-    </insert>  
 	
-	<delete id="del" parameterType="com.epo.admin.entity.VipPolicyFeedback">
-		delete from vip_policy_feedback
-		 where id_feedback = #{idFeedback}  	  
-	</delete>
-	
-	<update id="upd" parameterType="com.epo.admin.entity.VipPolicyFeedback">
-		update vip_policy_feedback set
-	           member_code = #{memberCode}, 
-	           feedback_result = #{feedbackResult}, 
-	           feedback_time = #{feedbackTime}, 
-	           client_ip = #{clientIp}, 
-	           client_sent_time = #{clientSentTime}, 
-	           browser_agent = #{browserAgent} 
-         where id_feedback = #{idFeedback}  	        
-	</update>
-  	
 	<resultMap type="com.epo.admin.entity.VipPolicyFeedback" id="result">
-        <result property="idFeedback" column="id_feedback"/>
+        <id property="idFeedback" column="id_feedback"/>
         <result property="memberCode" column="member_code"/>
         <result property="feedbackResult" column="feedback_result"/>
         <result property="feedbackTime" column="feedback_time"/>
@@ -36,7 +13,7 @@
         <result property="clientSentTime" column="client_sent_time"/>
         <result property="browserAgent" column="browser_agent"/>
 	</resultMap>
-  	
+	
 	<sql id="columns">
 		t.id_feedback, t.member_code, t.feedback_result, t.feedback_time, t.client_ip, t.client_sent_time, t.browser_agent 
 	</sql>
@@ -77,12 +54,11 @@
 	<sql id="dynamicWhere">
 		<where>	      				
 	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode)"> and t.member_code like concat('%',#{memberCode},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackResult)"> and t.feedback_result like concat('%',#{feedbackResult},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackTime)"> and t.feedback_time like concat('%',#{feedbackTime},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(clientIp)"> and t.client_ip like concat('%',#{clientIp},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(clientSentTime)"> and t.client_sent_time like concat('%',#{clientSentTime},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(browserAgent)"> and t.browser_agent like concat('%',#{browserAgent},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.member_code like concat('%',#{search},'%') or t.feedback_result like concat('%',#{search},'%') or t.feedback_time like concat('%',#{search},'%') or t.client_ip like concat('%',#{search},'%') or t.client_sent_time like concat('%',#{search},'%') or t.browser_agent like concat('%',#{search},'%'))</if>	
+	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackResult)"> and t.feedback_result = #{feedbackResult}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackTimeFm)"> and t.feedback_time &gt;= #{feedbackTimeFm}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(feedbackTimeTo)"> and t.feedback_time &lt;= #{feedbackTimeTo}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(clientSentTimeFm)"> and t.client_sent_time &gt;= #{clientSentTimeFm}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(clientSentTimeTo)"> and t.client_sent_time &lt;= #{clientSentTimeTo}</if>
 		</where>
 	</sql>	
 	

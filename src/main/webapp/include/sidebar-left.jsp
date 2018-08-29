@@ -2,7 +2,7 @@
 <!-- 左侧栏  -->
 <aside class="main-sidebar">
 	<section class="sidebar">
-		<!-- 菜单搜索form -->
+		<!-- 菜单搜索form 
 		<form id="navSearchForm" action="${ctx}/admin/home/searchMenu" method="get" class="sidebar-form">
 			<div class="input-group">
 				<input type="text" id="menuName" name="q" class="form-control" placeholder="Search..."/>
@@ -13,6 +13,8 @@
 				</span>
 			</div>
 		</form>
+		-->
+		<div class="sidebar-form"></div>
 		<!-- 树状导航菜单，后台数据动态生成 
 		...
 		-->

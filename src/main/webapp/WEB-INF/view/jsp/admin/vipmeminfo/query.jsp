@@ -130,8 +130,8 @@ $chok.view.query.config.tableColumns =
     {title:"email", field:"email", align:"center", valign:"middle", sortable:true},
     {title:"joinDate", field:"joinDate", align:"center", valign:"middle", sortable:true},
     {title:"storeCode", field:"storeCode", align:"center", valign:"middle", sortable:true},
-    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:true},
-    {title:"country", field:"country", align:"center", valign:"middle", sortable:true}
+    {title:"country", field:"country", align:"center", valign:"middle", sortable:true},
+    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:false}
 ];
 // config-是否显示复合排序
 $chok.view.query.config.showMultiSort = true;
@@ -188,9 +188,13 @@ $chok.view.query.init.toolbar = function(){
 	});
 };
 // OVERWRITE-表格第一二列
-/* $chok.view.query.fn.getColumns = function(){
-	return $.merge([],$chok.view.query.config.tableColumns);
-}; */
+$chok.view.query.fn.getColumns = function(){
+	var columns = 
+		[
+	     {checkbox:true, align:'center', valign:'middle'}
+		];
+	return $.merge(columns, $chok.view.query.config.tableColumns);
+};
 // 用户自定义
 $chok.view.fn.customize = function(){
     $('#f_joinDateFm').datepicker({

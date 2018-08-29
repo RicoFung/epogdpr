@@ -12,7 +12,7 @@ import chok.devwork.BaseController;
 import chok.util.TimeUtil;
 
 @Scope("prototype")
-@Controller
+@Controller(value="ClientVipPolicyFeedbackAction")
 @RequestMapping("/client/vippolicyfeedback")
 public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 {
@@ -25,20 +25,22 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 		try
 		{
 			VipPolicyFeedback po = new VipPolicyFeedback();
-			po.setBrowserAgent(req.getHeader("user-agent"));
-			po.setClientIp(req.getIpAdrress());
-			po.setClientSentTime(TimeUtil.getCurrentTime());
-			po.setFeedbackResult(req.getString("result"));
+			po.setClientIp(req.getString("clientIp"));
+			po.setClientSentTime(req.getString("clientSendTime"));
+			po.setBrowserAgent(req.getString("browserAgent"));
+			po.setFeedbackResult(req.getString("feedbackResult"));
 			po.setFeedbackTime(TimeUtil.getCurrentTime());
 			po.setMemberCode(req.getString("memberCode"));
-			service.feedback(po);
-			print(req.getString("memberCode"));
+			result = service.feedback(po);
 		}
 		catch(Exception e)
 		{
+			log.error(e.getMessage());
 			e.printStackTrace();
-			print("0:" + e.getMessage());
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
 		}
+		printJson(result);
 	}
 	
 

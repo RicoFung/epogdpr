@@ -17,10 +17,6 @@ public class WebMvcConfig implements WebMvcConfigurer
 	private String STATIC_PATH;
 	@Value("${static.doBase}")
 	private String STATIC_DOBASE;
-	@Value("${vstatic.path}")
-	private String VSTATIC_PATH;
-	@Value("${vstatic.doBase}")
-	private String VSTATIC_DOBASE;
 	@Value("${spring.mvc.view.prefix}")
 	private String SPRING_MVC_VIEW_PREFIX;
 	@Value("${spring.mvc.view.suffix}")
@@ -49,7 +45,6 @@ public class WebMvcConfig implements WebMvcConfigurer
 		 * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
 		 */
 		registry.addResourceHandler(STATIC_PATH).addResourceLocations("file:" + STATIC_DOBASE);
-		registry.addResourceHandler(VSTATIC_PATH).addResourceLocations(VSTATIC_DOBASE);
 	}
 
 	/**

@@ -1,11 +1,77 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/include/ctx.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="generator" content="Aspose.Words for .NET 17.1.0.0" />
 <script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
+<script type="text/javascript" src="${statics}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
+<script type="text/javascript">
+$(function(){
+	$("#btn_agree").click(function(){
+		$.get("http://ipinfo.io", function(response) {
+			var param = {
+				clientIp: response.ip,
+				clientSendTime: getCurrentDate(new Date()),
+				browserAgent: getBrowserAgent(),
+				memberCode: "${memberCode}",
+				feedbackResult: "A"
+			}
+			$.post("feedback", param, function(result){
+    	        if(!result.success) {
+    	        	$.alert({title: "Tips", type:"red", content: result.msg});
+    	        	return;
+    	        }
+	        	$.alert({title: "Tips", type:"green", content: result.msg});
+			});
+		}, "jsonp");
+	});
+	$("#btn_reject").click(function(){
+		$.get("http://ipinfo.io", function(response) {
+			var param = {
+				clientIp: response.ip,
+				clientSendTime: getCurrentDate(new Date()),
+				browserAgent: getBrowserAgent(),
+				memberCode: "${memberCode}",
+				feedbackResult: "R"
+			}
+			$.post("feedback", param, function(result){
+       	        if(!result.success) {
+       	        	$.alert({title: "Tips", type:"red", content: result.msg});
+       	        	return;
+       	        }
+   	        	$.alert({title: "Tips", type:"green", content: result.msg});
+			});
+		}, "jsonp");
+	});
+	
+	function getCurrentDate(date){
+	    var y = date.getFullYear();
+	    var m = date.getMonth()+1;
+	    var d = date.getDate();
+	    var h = date.getHours();
+	    var min = date.getMinutes();
+	    var s = date.getSeconds();
+	    var str=y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+'  '+(h<10?('0'+h):h)+':'+(min<10?('0'+min):min)+':'+(s<10?('0'+s):s);
+	    return str;
+	}
+	
+	function getBrowserAgent() {
+		var Sys={}; 
+	    var ua=navigator.userAgent.toLowerCase(); 
+	    var s; 
+	    (s=ua.match(/msie ([\d.]+)/))?Sys.ie=s[1]: 
+	    (s=ua.match(/firefox\/([\d.]+)/))?Sys.firefox=s[1]: 
+	    (s=ua.match(/chrome\/([\d.]+)/))?Sys.chrome=s[1]: 
+	    (s=ua.match(/opera.([\d.]+)/))?Sys.opera=s[1]: 
+	    (s=ua.match(/version\/([\d.]+).*safari/))?Sys.safari=s[1]:0; 
+		return s[0];
+	}
+});
+</script>
 <title></title>
 </head>
 <body>
@@ -607,8 +673,8 @@
 		</p>
 	</div>
 	<div align="center">
-		<a href="${ctx}/client/vippolicyfeedback/feedback?memberCode=${memberCode}&result=R" style="font-family: Arial; font-size:30; margin: 10px;">Reject</a>
-		<a href="${ctx}/client/vippolicyfeedback/feedback?memberCode=${memberCode}&result=A" style="font-family: Arial; font-size:30; margin: 10px;">Agree</a>
+		<a id="btn_reject" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Reject</a>
+		<a id="btn_agree" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Agree</a>
 	</div>
 </body>
 </html>

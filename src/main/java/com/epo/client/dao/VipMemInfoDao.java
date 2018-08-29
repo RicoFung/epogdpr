@@ -1,13 +1,16 @@
 package com.epo.client.dao;
 
 import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import chok.devwork.springboot.BaseDao;
-import com.epo.client.entity.VipPolicyFeedback;
 
-@Repository(value="ClientVipPolicyFeedbackDao")
-public class VipPolicyFeedbackDao extends BaseDao<VipPolicyFeedback,Long>
+import com.epo.admin.entity.VipMemInfo;
+
+import chok.devwork.springboot.BaseDao;
+
+@Repository(value="ClientVipMemInfoDao")
+public class VipMemInfoDao extends BaseDao<VipMemInfo,Long>
 {
 	@Resource
 	private SqlSession sqlSession;
@@ -19,8 +22,9 @@ public class VipPolicyFeedbackDao extends BaseDao<VipPolicyFeedback,Long>
 	}
 	
 	@Override
-	public Class<VipPolicyFeedback> getEntityClass()
+	public Class<VipMemInfo> getEntityClass()
 	{
-		return VipPolicyFeedback.class;
+		return VipMemInfo.class;
 	}
+	
 }

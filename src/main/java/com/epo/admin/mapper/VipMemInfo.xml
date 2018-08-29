@@ -31,7 +31,7 @@
         <result property="storeCode" column="store_code"/>
         <result property="country" column="country"/>
 	</resultMap>
-  	
+	
 	<sql id="columns">
 		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country 
 	</sql>
@@ -75,7 +75,6 @@
 	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDateTo)"> and t.join_date &lt;= #{joinDateTo}</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(storeCode)"> and t.store_code like concat('%',#{storeCode},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(country)"> and t.country like concat('%',#{country},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.email like concat('%',#{search},'%') or t.join_date like concat('%',#{search},'%') or t.store_code like concat('%',#{search},'%') or t.country like concat('%',#{search},'%'))</if>	
 		</where>
 	</sql>	
 	
@@ -88,7 +87,8 @@
 	<select id="query" resultType="list" resultMap="result">
 		select tt.* from 
 		(
-			select <include refid="columns"/> from vip_mem_info t
+			select <include refid="columns"/>
+			  from vip_mem_info t
 			<include refid="dynamicWhere" />
 		) tt
 		<include refid="order" />

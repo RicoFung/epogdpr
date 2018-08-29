@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">   
+
+<mapper namespace="com.epo.client.entity.VipMemInfo">
+  	
+	<sql id="dynamicWhere">
+		<where>	      				
+	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode)"> and t.member_code = #{memberCode}</if>
+		</where>
+	</sql>	
+	
+	<select id="getCount" resultType="int">
+		select count(1) from vip_mem_info t
+		<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>  
