@@ -116,6 +116,7 @@ public class DataSourceDefaultConfig
 		prop.setProperty("imp*", "PROPAGATION_REQUIRED,-Exception");
 		prop.setProperty("del*", "PROPAGATION_REQUIRED,-Exception");
 		prop.setProperty("upd*", "PROPAGATION_REQUIRED,-Exception");
+		prop.setProperty("feedback", "PROPAGATION_REQUIRED,-Exception");
 		prop.setProperty("get*", "PROPAGATION_NEVER,readOnly");
 		prop.setProperty("query*", "PROPAGATION_NEVER,readOnly");
 		TransactionInterceptor ti = new TransactionInterceptor();

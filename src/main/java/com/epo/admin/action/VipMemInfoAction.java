@@ -51,8 +51,8 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 			else
 				result.setSuccess(false);
 				
-			result.setMsg("(Success: "+sucRows.size()+")");
-			result.setMsg(result.getMsg()+"(Error: "+errRows.size()+")");
+			result.setMsg("(导入成功: "+sucRows.size()+")");
+			result.setMsg(result.getMsg()+" (导入失败: "+errRows.size()+")");
 			
 			if (errRows.size() > 0)
 			{

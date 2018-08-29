@@ -100,7 +100,9 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	 */
 	public List<VipMemInfoErr> queryErr(Map<String, Object> m)
 	{
-		return vipMemInfoErrDao.query(m);
+		List<VipMemInfoErr> list = vipMemInfoErrDao.query(m);
+//		vipMemInfoErrDao.del(Long.valueOf(m.get("rowid").toString())); // 用户读取失败数据后立即删除
+		return list;
 	}
 	
 	/**
@@ -164,8 +166,8 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			po.setMemberCode(r[0]);
 			po.setEmail(r[1]);
 			po.setJoinDate(r[2]);
-			po.setStoreCode(r[4]);
-			po.setCountry(Dict.countryMap.get(r[5]));
+			po.setStoreCode(r[3]);
+			po.setCountry(Dict.countryMap.get(r[4]));
 			if (validateCell(po))
 				sucRows.add(po);
 			else

@@ -10,6 +10,11 @@
        	values
        	( #{rowid}, #{memberCode}, #{email}, #{joinDate}, #{storeCode}, #{country}, #{msg})
     </insert>  
+    
+	<delete id="del" parameterType="com.epo.admin.entity.VipMemInfoErr">
+		delete from vip_mem_info_err
+		 where rowid = #{rowid}
+	</delete>
 	
 	<resultMap type="com.epo.admin.entity.VipMemInfoErr" id="result">
         <result property="rowid" column="rowid"/>
@@ -60,14 +65,7 @@
 	
 	<sql id="dynamicWhere">
 		<where>	      				
-	       <if test="@chok.devwork.Ognl@isNotEmpty(rowid)"> and t.rowid like concat('%',#{rowid},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(memberCode)"> and t.member_code like concat('%',#{memberCode},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(email)"> and t.email like concat('%',#{email},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDate)"> and t.join_date like concat('%',#{joinDate},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(storeCode)"> and t.store_code like concat('%',#{storeCode},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(country)"> and t.country like concat('%',#{country},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(msg)"> and t.msg like concat('%',#{msg},'%')</if>
-	       <if test="@chok.devwork.Ognl@isNotEmpty(search)"> and (t.rowid like concat('%',#{search},'%') or t.member_code like concat('%',#{search},'%') or t.email like concat('%',#{search},'%') or t.join_date like concat('%',#{search},'%') or t.store_code like concat('%',#{search},'%') or t.country like concat('%',#{search},'%') or t.msg like concat('%',#{search},'%'))</if>	
+	       <if test="@chok.devwork.Ognl@isNotEmpty(rowid)"> and t.rowid = #{rowid}</if>
 		</where>
 	</sql>	
 	
