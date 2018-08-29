@@ -121,7 +121,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			// 设置邮件信息-主题
 			String subject = Dict.MAIL_SUBJECT;
 			// 设置邮件信息-语言模板
-			String lang = entry.getKey().split("_")[0];
+			String lang = entry.getKey();
 			String template = Dict.MAIL_TEMPLATE+"_" + lang;
 			// 遍历 分组后的 List<VipMemInfo> 发送邮件
 			list.forEach(item->{

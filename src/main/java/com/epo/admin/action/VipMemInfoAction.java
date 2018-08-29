@@ -87,7 +87,7 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 			}
 			service.sendEmail(vipMemInfos);
 			result.setSuccess(true);
-			result.setMsg("Success !");
+			result.setMsg("发送成功 !");
 		}
 		catch (Exception e)
 		{

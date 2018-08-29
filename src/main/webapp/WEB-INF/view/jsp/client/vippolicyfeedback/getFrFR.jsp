@@ -11,39 +11,40 @@
 <link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
 <script type="text/javascript">
 $(function(){
+	var param = {
+		browserAgent: getBrowserAgent(),
+		memberCode: "${memberCode}",
+		lang: "fr_FR"
+	};
 	$("#btn_agree").click(function(){
 		$.get("http://ipinfo.io", function(response) {
-			var param = {
+			$.extend(param, {
 				clientIp: response.ip,
 				clientSendTime: getCurrentDate(new Date()),
-				browserAgent: getBrowserAgent(),
-				memberCode: "${memberCode}",
 				feedbackResult: "A"
-			}
+			});
 			$.post("feedback", param, function(result){
     	        if(!result.success) {
-    	        	$.alert({title: "Invite", type:"red", content: result.msg});
+    	        	$.alert({title: "${i18nAttention}", type:"red", content: result.msg});
     	        	return;
     	        }
-	        	$.alert({title: "Invite", type:"green", content: result.msg});
+	        	$.alert({title: "${i18nRemind}", type:"green", content: result.msg});
 			});
 		}, "jsonp");
 	});
 	$("#btn_reject").click(function(){
 		$.get("http://ipinfo.io", function(response) {
-			var param = {
+			$.extend(param, {
 				clientIp: response.ip,
 				clientSendTime: getCurrentDate(new Date()),
-				browserAgent: getBrowserAgent(),
-				memberCode: "${memberCode}",
 				feedbackResult: "R"
-			}
+			});
 			$.post("feedback", param, function(result){
     	        if(!result.success) {
-    	        	$.alert({title: "Invite", type:"red", content: result.msg});
+    	        	$.alert({title: "${i18nAttention}", type:"red", content: result.msg});
     	        	return;
     	        }
-	        	$.alert({title: "Invite", type:"green", content: result.msg});
+	        	$.alert({title: "${i18nRemind}", type:"green", content: result.msg});
 			});
 		}, "jsonp");
 	});
@@ -737,8 +738,8 @@ $(function(){
 		</p>
 	</div>
 	<div align="center" style="margin-bottom: 100px">
-		<a id="btn_reject" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">Rejeter</a>
-		<a id="btn_agree" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">D'accord</a>
+		<a id="btn_reject" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">${i18nReject}</a>
+		<a id="btn_agree" href="javascript:void(0)" style="font-family: Arial; font-size:30; margin: 10px;">${i18nAgree}</a>
 	</div>
 </body>
 </html>
