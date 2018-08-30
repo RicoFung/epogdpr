@@ -1,10 +1,13 @@
 package com.epo.admin.entity;
 
+import java.text.ParseException;
 import java.util.List;
+import java.util.Locale;
 
 import com.common.Dict;
 
 import chok.util.CollectionUtil;
+import chok.util.TimeUtil;
 
 /**
  *
@@ -61,7 +64,16 @@ public class VipMemInfo implements java.io.Serializable
 
 	public java.lang.String getJoinDate()
 	{
-		return this.joinDate;
+		String result = "";
+		try
+		{
+			result = TimeUtil.toggleFormat(this.joinDate, Dict.DATE_APP_FORMAT, Locale.CHINA, Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public void setStoreCode(java.lang.String value)

@@ -1,5 +1,6 @@
 package com.epo.admin.service;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.epo.admin.entity.VipMemInfoErr;
 import chok.devwork.springboot.BaseDao;
 import chok.devwork.springboot.BaseService;
 import chok.util.POIUtil;
+import chok.util.TimeUtil;
 import chok.util.UniqueId;
 import chok.util.ValidationUtil;
 
@@ -70,6 +72,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			for (int j = 0; j < sucRows.size(); j++)
 			{
 				VipMemInfo po = sucRows.get(j);
+				po.setJoinDate(TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA));
 				vipMemInfoDao.add(po);
 			}
 		}
@@ -163,7 +166,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	{
 		List<VipMemInfo> sucRows = new LinkedList<VipMemInfo>();
 		List<VipMemInfo> errRows = new LinkedList<VipMemInfo>();
-		
+
 		for (int j = 0; j < rows.size(); j++)
 		{
 			String[] r = rows.get(j);
@@ -251,8 +254,13 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		}
 		else
 		{
-			if (!ValidationUtil.checkDateFormat(po.getJoinDate()))
+			try
 			{
+				TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA);
+			}
+			catch (ParseException e)
+			{
+				e.printStackTrace();
 				po.setPassed(false);
 				po.setMsg(po.getMsg() + "(JoinDate format is illegal)");
 			}

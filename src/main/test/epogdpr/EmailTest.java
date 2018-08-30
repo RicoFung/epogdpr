@@ -1,5 +1,10 @@
 package epogdpr;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -41,7 +46,7 @@ public class EmailTest
 		System.out.println("邮件已发送");
 	}
 
-	@Test
+//	@Test
 	public void sendTemplateEmail()
 	{
 		String deliver = "156812113@qq.com";
@@ -87,4 +92,34 @@ public class EmailTest
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void stringToDate() throws ParseException
+	{
+//		String format = "dd-MMM-yy";
+//		SimpleDateFormat sdf1 = new SimpleDateFormat(format, Locale.ENGLISH);
+//		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd"); 
+//		// date to string
+////		SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.FRANCE);
+//		System.out.println(sdf1.format(sdf2.parse("2017-05-30")));
+//		
+//		// string to date
+//		Date d = sdf1.parse("30-MAY-17");
+//	    String str = sdf2.format(d); 
+//		System.out.println(str);
+		
+		System.out.println(toggleDateFormat("30-MAYyy-", "dd-MMM-yy", Locale.ENGLISH, "yyyy-MM-dd", Locale.getDefault()));
+	}
+	
+	public String toggleDateFormat(String dateString, String dateFormatFm, Locale localeFm, String dateFormatTo, Locale localeTo) throws ParseException
+	{
+		SimpleDateFormat sdfFm = new SimpleDateFormat(dateFormatFm, localeFm);
+		SimpleDateFormat sdfTo = new SimpleDateFormat(dateFormatTo, localeTo);
+		
+		Date date = sdfFm.parse(dateString);
+		String result =sdfTo.format(date);
+		return result;
+	}
+	
+	
 }
