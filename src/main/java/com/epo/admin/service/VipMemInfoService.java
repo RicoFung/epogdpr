@@ -3,6 +3,7 @@ package com.epo.admin.service;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.thymeleaf.context.Context;
@@ -34,7 +36,9 @@ import chok.util.ValidationUtil;
 public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 {
 	static Logger log = LoggerFactory.getLogger(VipMemInfoService.class);
-	
+
+	@Autowired
+	MessageSource source;
 	@Autowired
 	private VipMemInfoDao vipMemInfoDao;
 	@Autowired
@@ -117,14 +121,15 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		// 按country分组选择template并发送邮件
 		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet()) 
 		{
+			String lang = entry.getKey();
+			Locale locale = new Locale(lang.split("_")[0], lang.split("_")[1]);
 			List<VipMemInfo> list = entry.getValue();
 		    // 设置邮件信息-发送者
 			String deliver = Dict.SPRING_MAIL_USERNAME;
-			// 设置邮件信息-主题
-			String subject = Dict.MAIL_SUBJECT;
-			// 设置邮件信息-语言模板
-			String lang = entry.getKey();
-			String template = Dict.MAIL_TEMPLATE+"_" + lang;
+			// 设置邮件信息-多语言主题
+			String subject = source.getMessage("mail.subject", null, locale);
+			// 设置邮件信息-多语言模板
+			String template = Dict.MAIL_TEMPLATE_PREFIX+"_" + lang.toLowerCase();
 			// 遍历 分组后的 List<VipMemInfo> 发送邮件
 			list.forEach(item->{
 				// 设置邮件信息-接收者

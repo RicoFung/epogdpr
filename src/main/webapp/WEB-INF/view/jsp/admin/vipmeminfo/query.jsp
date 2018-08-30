@@ -21,8 +21,8 @@
 		======================================================================================================= -->
 		<div id="toolbar">
 		<button type="button" class="btn btn-default" id="bar_btn_query" pbtnId="pbtn_query2" data-toggle="modal" data-target="#modal_form_query"><i class="glyphicon glyphicon-search"></i></button>
-		<button type="button" class="btn btn-default" id="bar_btn_imp" ><i class="glyphicon glyphicon-upload"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_exp" ><i class="glyphicon glyphicon-download"></i></button>
+		<button type="button" class="btn btn-default" id="bar_btn_imp" ><i class="glyphicon glyphicon-upload"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_email" ><i class="glyphicon glyphicon-envelope"></i></button>
 		</div>
 		<!-- data list
