@@ -128,7 +128,7 @@ $chok.view.query.config.tableColumns =
 [
     {title:"memberCode", field:"memberCode", align:"center", valign:"middle", sortable:true},
     {title:"email", field:"email", align:"center", valign:"middle", sortable:true},
-    {title:"joinDate", field:"joinDate", align:"center", valign:"middle", sortable:true},
+    {title:"joinDate", field:"joinDate2", align:"center", valign:"middle", sortable:true},
     {title:"storeCode", field:"storeCode", align:"center", valign:"middle", sortable:true},
     {title:"country", field:"country", align:"center", valign:"middle", sortable:true},
     {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:false}
@@ -151,7 +151,7 @@ $chok.view.query.init.toolbar = function(){
 				                "vip_mem_info",
 				                "", 
 				                "member_code,email,join_date,store_code,country",
-				                "memberCode,email,joinDate,storeCode,countryCn");
+				                "memberCode,email,joinDate2,storeCode,countryCn");
 	});
 	$("#bar_btn_email").click(function(){
 		if($chok.view.query.fn.getSelections().length<1) {

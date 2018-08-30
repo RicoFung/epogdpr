@@ -64,6 +64,11 @@ public class VipMemInfo implements java.io.Serializable
 
 	public java.lang.String getJoinDate()
 	{
+		return this.joinDate;
+	}
+	
+	public java.lang.String getJoinDate2()
+	{
 		String result = "";
 		try
 		{
