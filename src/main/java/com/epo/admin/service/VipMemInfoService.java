@@ -132,7 +132,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			// 设置邮件信息-多语言主题
 			String subject = source.getMessage("mail.subject", null, locale);
 			// 设置邮件信息-多语言模板
-			String template = Dict.MAIL_TEMPLATE_PREFIX+"_" + lang.toLowerCase();
+			String template = Dict.MAIL_TEMPLATE_PREFIX + "_" + lang.toLowerCase();
 			// 遍历 分组后的 List<VipMemInfo> 发送邮件
 			list.forEach(item->{
 				// 设置邮件信息-接收者

@@ -26,7 +26,7 @@
 				</form>
 			</div>
 			<div class="box-footer">
-				<a href="${ctx}/templates/imp/VIP(EU).xlsx" target="_blank">上传模板.xlsx</a>
+				<a href="${ctx}/excel/VIP(EU).xlsx" target="_blank">上传模板.xlsx</a>
 			</div>
 		</div>
 	</section>
