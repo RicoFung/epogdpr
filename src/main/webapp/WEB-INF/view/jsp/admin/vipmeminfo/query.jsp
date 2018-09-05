@@ -24,6 +24,7 @@
 		<button type="button" class="btn btn-default" id="bar_btn_exp" ><i class="glyphicon glyphicon-download"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_imp" ><i class="glyphicon glyphicon-upload"></i></button>
 		<button type="button" class="btn btn-default" id="bar_btn_email" ><i class="glyphicon glyphicon-envelope"></i></button>
+		<button type="button" class="btn btn-default" id="bar_btn_del"><i class="glyphicon glyphicon-remove"></i></button>
 		</div>
 		<!-- data list
 		======================================================================================================= -->
@@ -143,15 +144,15 @@ $chok.view.query.callback.onLoadSuccess = function(){
 };
 // OVERWRITE-自定义工具栏
 $chok.view.query.init.toolbar = function(){
-	$("#bar_btn_imp").click(function(){
-		location.href = "imp?"+$chok.view.query.fn.getUrlParams();
-	});
 	$("#bar_btn_exp").click(function(){
 		$chok.view.query.fn.exp("exp", 
 				                "vip_mem_info",
 				                "", 
 				                "member_code,email,join_date,store_code,country",
 				                "memberCode,email,joinDate2,storeCode,countryCn");
+	});
+	$("#bar_btn_imp").click(function(){
+		location.href = "imp?"+$chok.view.query.fn.getUrlParams();
 	});
 	$("#bar_btn_email").click(function(){
 		if($chok.view.query.fn.getSelections().length<1) {
@@ -166,7 +167,7 @@ $chok.view.query.init.toolbar = function(){
 		    buttons: {
 		        ok: function() {
 		        	var keys = ["memberCode", "email", "country"];
-		        	console.info($chok.view.query.fn.getValSelectionsByKey2(keys)); //return;
+		        	//console.info($chok.view.query.fn.getValSelectionsByKey2(keys)); //return;
 		    		$.post("sendEmail", 
     				{
 		    			jsonparams: JSON.stringify($chok.view.query.fn.getValSelectionsByKey2(keys))
@@ -180,6 +181,33 @@ $chok.view.query.init.toolbar = function(){
 	    	        	$.alert({title: "提示", type:"green", content: result.msg});
 		    	        $("#tb_list").bootstrapTable("refresh"); // 刷新table
 		    		});
+		        },
+		        close: function () {
+		        }
+		    }
+		});
+	});
+	$("#bar_btn_del").click(function(){
+		if($chok.view.query.fn.getValSelectionsByKey("memberCode").length<1) {
+			$.alert({title: "提示", type: "red", content: "没选择"});
+			return;
+		}
+		$.confirm({
+		    title: '提示',
+		    content: "确认删除？",
+		    type: 'green',
+		    typeAnimated: true,
+		    buttons: {
+		        ok: function() {
+			    		$.post("del",{memberCode:$chok.view.query.fn.getValSelectionsByKey("memberCode")},function(result){
+			    	        $chok.view.query.callback.delRows(result); // 删除行回调
+			    	        if(!result.success) {
+			    	        	$.alert({title: "提示", type:"red", content: result.msg});
+			    	        	return;
+			    	        }
+			    	        $.alert({title: "提示", type:"green", content: "删除成功！"});
+			    	        $("#tb_list").bootstrapTable('refresh'); // 刷新table
+			    		});
 		        },
 		        close: function () {
 		        }

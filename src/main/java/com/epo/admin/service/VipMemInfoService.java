@@ -280,4 +280,15 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 		return po.getPassed();
 	}
 	
+	/**
+	 * 删除
+	 * @param memberCodes
+	 */
+	public void del(String[] memberCodes)
+	{
+		for(String memberCode: memberCodes)
+		{
+			vipMemInfoDao.del(memberCode);
+		}
+	}
 }

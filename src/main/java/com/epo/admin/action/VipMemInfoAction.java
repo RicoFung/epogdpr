@@ -146,4 +146,20 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 			"xlsx");
 	}
 
+	@RequestMapping("/del")
+	public void del() 
+	{
+		try
+		{
+			service.del(req.getStringArray("memberCode[]"));
+			result.setSuccess(true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+		}
+		printJson(result);
+	}
 }

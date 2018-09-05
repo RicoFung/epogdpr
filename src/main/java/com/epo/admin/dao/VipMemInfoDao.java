@@ -32,4 +32,9 @@ public class VipMemInfoDao extends BaseDao<VipMemInfo,Long>
 	{
 		return (List<Map<String, String>>) query("getCountrys", null);
 	}
+	
+	public void del(String memberCode)
+	{
+		this.del("del", memberCode);
+	}
 }
