@@ -73,6 +73,15 @@
 				<input type="text" class="form-control pull-right" id="f_joinDateTo"/>
 			</div>
 		</div>
+		<div class="form-group">
+			<label for="f_sendStatus">sendStatus：</label>
+			<select class="form-control input-sm" id="f_sendStatus">
+				<option value="">全部</option>
+				<option value="0">未发送</option>
+				<option value="1">发送成功</option>
+				<option value="-1">发送失败</option>
+			</select>
+		</div>
 	</div>
 	<div class="modal-footer">
 	   <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-repeat"></i></button>
@@ -106,6 +115,7 @@ $chok.view.query.config.setPreFormParams = function(){
 	$("#f_country").val(typeof("${queryParams.f_country}")=="undefined"?"":"${queryParams.f_country}");
 	$("#f_joinDateFm").val(typeof("${queryParams.f_joinDateFm}")=="undefined"?"":"${queryParams.f_joinDateFm}");
 	$("#f_joinDateTo").val(typeof("${queryParams.f_joinDateTo}")=="undefined"?"":"${queryParams.f_joinDateTo}");
+	$("#f_sendStatus").val(typeof("${queryParams.f_sendStatus}")=="undefined"?"":"${queryParams.f_sendStatus}");
 };
 $chok.view.query.config.formParams = function(p){
 	p.memberCode = $("#f_memberCode").val();
@@ -113,6 +123,7 @@ $chok.view.query.config.formParams = function(p){
 	p.country = $("#f_country").val();
 	p.joinDateFm = $("#f_joinDateFm").val();
 	p.joinDateTo = $("#f_joinDateTo").val();
+	p.sendStatus = $("#f_sendStatus").val();
     return p;
 };
 $chok.view.query.config.urlParams = function(){
@@ -121,7 +132,8 @@ $chok.view.query.config.urlParams = function(){
 			f_storeCode : $("#f_storeCode").val(),
 			f_country : $("#f_country").val(),
 			f_joinDateFm : $("#f_joinDateFm").val(),
-			f_joinDateTo : $("#f_joinDateTo").val()
+			f_joinDateTo : $("#f_joinDateTo").val(),
+			f_sendStatus : $("#f_sendStatus").val()
 	};
 };
 // config-定义表格列
@@ -132,7 +144,21 @@ $chok.view.query.config.tableColumns =
     {title:"joinDate", field:"joinDate2", align:"center", valign:"middle", sortable:true},
     {title:"storeCode", field:"storeCode", align:"center", valign:"middle", sortable:true},
     {title:"country", field:"country", align:"center", valign:"middle", sortable:true},
-    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:false}
+    {title:"countryCn", field:"countryCn", align:"center", valign:"middle", sortable:false},
+    {title:"sendTime", field:"sendTime", align:"center", valign:"middle", sortable:true},
+    {title:"sendStatus", field:"sendStatus", align:"center", valign:"middle", sortable:true,
+        formatter:function(value,row,index){
+        	if (row.sendStatus=="0") {
+        		return "未发送";
+        	} else if (row.sendStatus=="1") {
+        		return "发送成功";
+        	} else if (row.sendStatus=="-1") {
+        		return "发送失败";
+        	} else {
+        		return "";
+        	}
+        } 
+    }
 ];
 // config-是否显示复合排序
 $chok.view.query.config.showMultiSort = true;
@@ -167,7 +193,6 @@ $chok.view.query.init.toolbar = function(){
 		    buttons: {
 		        ok: function() {
 		        	var keys = ["memberCode", "email", "country"];
-		        	//console.info($chok.view.query.fn.getValSelectionsByKey2(keys)); //return;
 		    		$.post("sendEmail", 
     				{
 		    			jsonparams: JSON.stringify($chok.view.query.fn.getValSelectionsByKey2(keys))

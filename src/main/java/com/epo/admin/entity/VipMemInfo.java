@@ -15,9 +15,9 @@ import chok.util.TimeUtil;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("serial")
 public class VipMemInfo implements java.io.Serializable
 {
+	private static final long serialVersionUID = 1L;
 	// 会员代码 db_column: member_code
 	private java.lang.String memberCode;
 	// email db_column: email
@@ -28,6 +28,10 @@ public class VipMemInfo implements java.io.Serializable
 	private java.lang.String storeCode;
 	// 所在国家编码，采用Java 的 Locate 数据 db_column: country
 	private java.lang.String country;
+	// 发送时间
+	private String sendTime;
+	// 发送状态（0:未发送；1:发送成功；-1发送失败）
+	private String sendStatus;
 	// rowid db_column: rowid
 	private long rowid;
 	// 是否验证通过
@@ -101,6 +105,26 @@ public class VipMemInfo implements java.io.Serializable
 		return this.country;
 	}
 	
+	public String getSendTime()
+	{
+		return sendTime;
+	}
+
+	public void setSendTime(String sendTime)
+	{
+		this.sendTime = sendTime;
+	}
+
+	public String getSendStatus()
+	{
+		return sendStatus;
+	}
+
+	public void setSendStatus(String sendStatus)
+	{
+		this.sendStatus = sendStatus;
+	}
+
 	public java.lang.String getCountryCn()
 	{
 		return CollectionUtil.getKey(Dict.countryMap, this.country).get(0).toString();

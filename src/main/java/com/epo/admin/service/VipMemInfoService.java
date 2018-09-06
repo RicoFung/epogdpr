@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import javax.mail.MessagingException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,14 +141,22 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				Context context = new Context();
 				context.setVariable("privacy_policy_url", Dict.MAIL_PRIVACY_POLICY_URL+"memberCode="+item.getMemberCode()+"&lang="+lang);
 				// 发送邮件
+				String sendStatus = "0";
 				try
 				{
 					MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
+					sendStatus = "1";
 				}
-				catch (MessagingException e)
+				catch (Exception e)
 				{
+					sendStatus = "-1";
 					log.error(e.getMessage());
 					e.printStackTrace();
+				}
+				finally 
+				{
+					item.setSendTime(TimeUtil.getCurrentTime());
+					vipMemInfoDao.updSendStatusByMemberCode(sendStatus, item.getMemberCode());
 				}
 			});
 		}

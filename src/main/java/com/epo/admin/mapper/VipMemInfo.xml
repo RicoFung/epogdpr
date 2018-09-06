@@ -20,7 +20,16 @@
 	           email = #{email}, 
 	           join_date = #{joinDate}, 
 	           store_code = #{storeCode}, 
-	           country = #{country} 
+	           country = #{country}, 
+	           send_time = #{sendTime}, 
+	           send_status = #{sendStatus}
+         where member_code = #{memberCode}  	        
+	</update>
+	
+	<update id="updSendStatusByMemberCode">
+		update vip_mem_info set
+	           send_time = #{sendTime}, 
+	           send_status = #{sendStatus}
          where member_code = #{memberCode}  	        
 	</update>
   	
@@ -30,10 +39,12 @@
         <result property="joinDate" column="join_date"/>
         <result property="storeCode" column="store_code"/>
         <result property="country" column="country"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="sendStatus" column="send_status"/>
 	</resultMap>
 	
 	<sql id="columns">
-		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country 
+		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country, date_format(t.send_time,'%Y-%m-%d %h:%i:%s') send_time, send_status 
 	</sql>
 	
 	<sql id="order">
@@ -52,6 +63,8 @@
 		<if test="sort == 'joinDate'">join_date</if>
 		<if test="sort == 'storeCode'">store_code</if>
 		<if test="sort == 'country'">country</if>
+		<if test="sort == 'sendTime'">send_time</if>
+		<if test="sort == 'sendStatus'">send_status</if>
 	</sql>
 	<sql id="orderParse2">
 		<if test="item.sortName == 'memberCode'">member_code</if>
@@ -59,6 +72,8 @@
 		<if test="item.sortName == 'joinDate'">join_date</if>
 		<if test="item.sortName == 'storeCode'">store_code</if>
 		<if test="item.sortName == 'country'">country</if>
+		<if test="item.sortName == 'sendTime'">send_time</if>
+		<if test="item.sortName == 'sendStatus'">send_status</if>
 	</sql>
 	
 	<sql id="page">
@@ -75,6 +90,9 @@
 	       <if test="@chok.devwork.Ognl@isNotEmpty(joinDateTo)"> and t.join_date &lt;= #{joinDateTo}</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(storeCode)"> and t.store_code like concat('%',#{storeCode},'%')</if>
 	       <if test="@chok.devwork.Ognl@isNotEmpty(country)"> and t.country like concat('%',#{country},'%')</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(sendTimeFm)"> and t.send_time &gt;= #{sendTimeFm}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(sendTimeTo)"> and t.send_time &lt;= #{sendTimeTo}</if>
+	       <if test="@chok.devwork.Ognl@isNotEmpty(sendStatus)"> and t.send_status = #{sendStatus}</if>
 		</where>
 	</sql>	
 	
