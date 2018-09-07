@@ -15,7 +15,7 @@
 	</resultMap>
 	
 	<sql id="columns">
-		t.id_feedback, t.member_code, t.feedback_result, t.feedback_time, t.client_ip, t.client_sent_time, t.browser_agent 
+		t.id_feedback, t.member_code, t.feedback_result, date_format(t.feedback_time,'%Y-%m-%d %H:%i:%s') feedback_time, t.client_ip, date_format(t.client_sent_time,'%Y-%m-%d %H:%i:%s') client_sent_time, t.browser_agent 
 	</sql>
 	
 	<sql id="order">

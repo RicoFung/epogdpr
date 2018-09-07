@@ -138,7 +138,6 @@ $chok.view.query.config.urlParams = function(){
 // config-定义表格列
 $chok.view.query.config.tableColumns = 
 [
-    {title:"idFeedback", field:"idFeedback", align:"center", valign:"middle", sortable:true},
     {title:"memberCode", field:"memberCode", align:"center", valign:"middle", sortable:true},
     {title:"feedbackResult", field:"feedbackResult", align:"center", valign:"middle", sortable:true},
     {title:"feedbackTime", field:"feedbackTime", align:"center", valign:"middle", sortable:true},

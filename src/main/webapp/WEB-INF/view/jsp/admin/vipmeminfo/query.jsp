@@ -174,8 +174,8 @@ $chok.view.query.init.toolbar = function(){
 		$chok.view.query.fn.exp("exp", 
 				                "vip_mem_info",
 				                "", 
-				                "member_code,email,join_date,store_code,country",
-				                "memberCode,email,joinDate2,storeCode,countryCn");
+				                "member_code,email,join_date,store_code,country,send_time,send_status",
+				                "memberCode,email,joinDate2,storeCode,countryCn,sendTime,sendStatus");
 	});
 	$("#bar_btn_imp").click(function(){
 		location.href = "imp?"+$chok.view.query.fn.getUrlParams();
@@ -192,7 +192,7 @@ $chok.view.query.init.toolbar = function(){
 		    typeAnimated: true,
 		    buttons: {
 		        ok: function() {
-		        	var keys = ["memberCode", "email", "country"];
+		        	var keys = ["memberCode", "email", "country", "sendStatus"];
 		    		$.post("sendEmail", 
     				{
 		    			jsonparams: JSON.stringify($chok.view.query.fn.getValSelectionsByKey2(keys))

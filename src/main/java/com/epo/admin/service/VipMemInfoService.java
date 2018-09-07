@@ -136,6 +136,13 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 			String template = Dict.MAIL_TEMPLATE_PREFIX + "_" + lang.toLowerCase();
 			// 遍历 分组后的 List<VipMemInfo> 发送邮件
 			list.forEach(item->{
+				// 验证重复发送邮件
+				if (item.getSendStatus().equals("1"))
+				{
+					r.setSuccess(false);
+					r.setMsg("("+item.getMemberCode()+")邮件已发送, 不能重复发送！");
+					return;
+				}
 				// 设置邮件信息-接收者
 				String[] receiver = new String[] {item.getEmail()};
 				// 设置邮件信息-抄送者
@@ -254,7 +261,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				po.setMsg(po.getMsg() + "(MemberCode already exists)");
 			}
 		}
-
+		
 		if (StringUtils.isBlank(po.getEmail()))
 		{
 			po.setPassed(false);
