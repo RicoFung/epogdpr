@@ -55,8 +55,9 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 		String lang = req.getString("lang");
 		Locale locale = new Locale(lang.split("_")[0], lang.split("_")[1]);
 		put("memberCode", req.getString("memberCode"));
-		put("i18nAgree", source.getMessage("agree", null, locale));
+		put("i18nAccept", source.getMessage("accept", null, locale));
 		put("i18nReject", source.getMessage("reject", null, locale));
+		put("i18nSubmit", source.getMessage("submit", null, locale));
 		put("i18nAttention", source.getMessage("attention", null, locale));
 		put("i18nRemind", source.getMessage("remind", null, locale));
 		String suffix = lang.split("_")[0].substring(0, 1).toUpperCase() + lang.substring(1).split("_")[0] + lang.substring(1).split("_")[1];

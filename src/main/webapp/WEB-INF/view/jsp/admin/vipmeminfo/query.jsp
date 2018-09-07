@@ -199,11 +199,10 @@ $chok.view.query.init.toolbar = function(){
     				},
     				function(result){
 		    	        $chok.view.query.callback.delRows(result); // 删除行回调
-		    	        if(!result.success) {
+		    	        if (result.success) 
+	    	        		$.alert({title: "提示", type:"green", content: result.msg});
+		    	        else
 		    	        	$.alert({title: "提示", type:"red", content: result.msg});
-		    	        	return;
-		    	        }
-	    	        	$.alert({title: "提示", type:"green", content: result.msg});
 		    	        $("#tb_list").bootstrapTable("refresh"); // 刷新table
 		    		});
 		        },

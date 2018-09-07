@@ -78,24 +78,9 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 	@RequestMapping("/sendEmail")
 	public void sendEmail()
 	{
-		try
-		{
-			List<VipMemInfo> vipMemInfos = JSON.parseArray(req.getString("jsonparams"), VipMemInfo.class);
-			for(VipMemInfo v : vipMemInfos)
-			{
-				log.info("==> jsonparams" + v.toString());
-			}
-			service.sendEmail(vipMemInfos);
-			result.setSuccess(true);
-			result.setMsg("发送成功 !");
-		}
-		catch (Exception e)
-		{
-			log.error(e.getMessage());
-			e.printStackTrace();
-			result.setSuccess(false);
-			result.setMsg(e.getMessage());
-		}
+		log.info("==> (sendEmail) jsonparams: " + req.getString("jsonparams"));
+		List<VipMemInfo> vipMemInfos = JSON.parseArray(req.getString("jsonparams"), VipMemInfo.class);
+		result = service.sendEmail(vipMemInfos);
 		printJson(result);
 	}
 	

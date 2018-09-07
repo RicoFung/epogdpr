@@ -25,6 +25,7 @@ import com.epo.admin.dao.VipMemInfoErrDao;
 import com.epo.admin.entity.VipMemInfo;
 import com.epo.admin.entity.VipMemInfoErr;
 
+import chok.devwork.Result;
 import chok.devwork.springboot.BaseDao;
 import chok.devwork.springboot.BaseService;
 import chok.util.POIUtil;
@@ -115,8 +116,9 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	 * @param sendEmail
 	 * @throws Exception 
 	 */
-	public void sendEmail(List<VipMemInfo> vipMemInfos) throws Exception
+	public Result sendEmail(List<VipMemInfo> vipMemInfos) //throws Exception
 	{
+		Result r = new Result();
 		// 按country分组
 		Map<String, List<VipMemInfo>> vipMemInfoGroup =vipMemInfos.stream().collect(Collectors.groupingBy(VipMemInfo::getCountry));
 		// 按country分组选择template并发送邮件
@@ -146,12 +148,16 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				{
 					MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
 					sendStatus = "1";
+					r.setSuccess(true);
+					r.setMsg("发送成功！");
 				}
 				catch (Exception e)
 				{
 					sendStatus = "-1";
 					log.error(e.getMessage());
 					e.printStackTrace();
+					r.setSuccess(false);
+					r.setMsg(e.getMessage());
 				}
 				finally 
 				{
@@ -160,6 +166,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				}
 			});
 		}
+		return r;
 	}
 
 	/**
