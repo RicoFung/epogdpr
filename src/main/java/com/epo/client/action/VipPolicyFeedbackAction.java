@@ -47,10 +47,12 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 				log.error(msg);
 				result.setMsg(msg);
 				result.setSuccess(false);
-				printJson(result);
+			} 
+			else
+			{
+				po.setMemberCode(memberCode);
+				result = service.feedback(po, req.getString("lang"));
 			}
-			po.setMemberCode(memberCode);
-			result = service.feedback(po, req.getString("lang"));
 		}
 		catch(Exception e)
 		{
