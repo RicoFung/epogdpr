@@ -44,7 +44,7 @@ $(function(){
 	var param = {
 		browserAgent: getBrowserAgent(),
 		memberCode: "${memberCode}",
-		lang: "en_GB"
+		lang: "fr_FR"
 	};
 	$("#btn_submit").click(function(){
 		var feedback = $("input[name='rd_feedback']:checked").val();
