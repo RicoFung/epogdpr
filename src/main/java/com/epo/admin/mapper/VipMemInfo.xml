@@ -44,7 +44,7 @@
 	</resultMap>
 	
 	<sql id="columns">
-		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country, date_format(t.send_time,'%Y-%m-%d %h:%i:%s') send_time, send_status 
+		t.member_code, t.email, date_format(t.join_date,'%Y-%m-%d') join_date, t.store_code, t.country, date_format(t.send_time,'%Y-%m-%d %H:%i:%s') send_time, send_status 
 	</sql>
 	
 	<sql id="order">

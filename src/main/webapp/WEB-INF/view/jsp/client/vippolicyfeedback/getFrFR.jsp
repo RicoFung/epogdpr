@@ -43,7 +43,7 @@ a:hover, a:visited, a:link, a:active {}
 $(function(){
 	var param = {
 		browserAgent: getBrowserAgent(),
-		memberCode: "${memberCode}",
+		clientToken: "${clientToken}",
 		lang: "fr_FR"
 	};
 	$("#btn_submit").click(function(){

@@ -28,6 +28,7 @@ import com.epo.admin.entity.VipMemInfoErr;
 import chok.devwork.Result;
 import chok.devwork.springboot.BaseDao;
 import chok.devwork.springboot.BaseService;
+import chok.util.EncryptionUtil;
 import chok.util.POIUtil;
 import chok.util.TimeUtil;
 import chok.util.UniqueId;
@@ -141,8 +142,28 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				String[] carbonCopy = null;
 				// 设置邮件信息-模板上下文（用于模板变量赋值）
 				Context context = new Context();
-				context.setVariable("privacy_policy_url", Dict.MAIL_PRIVACY_POLICY_URL+"memberCode="+item.getMemberCode()+"&lang="+lang);
-				// 发送邮件
+				// 1. 生成token
+				String clientToken = null;
+				try
+				{
+					clientToken = EncryptionUtil.encodeAES(item.getMemberCode(), Dict.MAIL_PRIVACY_POLICY_KEY);
+				}
+				catch (Exception e)
+				{
+					log.error(e.getMessage());
+					e.printStackTrace();
+					r.setSuccess(false);
+					r.setMsg(e.getMessage());
+				}
+				// 生成token失败，不往下执行
+				if (!r.isSuccess()) return; 
+				// 2. 设置邮件中 privacy policy 超链接
+				context.setVariable("privacy_policy_url", 
+									Dict.MAIL_PRIVACY_POLICY_URL
+									+ "clientToken=" + clientToken
+									+ "&"
+									+ "lang="+lang);
+				// 3. 发送邮件
 				String sendStatus = "0";
 				try
 				{

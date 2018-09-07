@@ -24,6 +24,7 @@ public class Dict
 	public static String DATE_APP_FORMAT = PropertiesUtil.getValue("config/", "date.app.format");
 	public static String MAIL_TEMPLATE_PREFIX = PropertiesUtil.getValue("config/", "mail.template.prefix");
 	public static String MAIL_PRIVACY_POLICY_URL = PropertiesUtil.getValue("config/", "mail.privacy.policy.url");
+	public static String MAIL_PRIVACY_POLICY_KEY = PropertiesUtil.getValue("config/", "mail.privacy.policy.key");
 	
 	// COUNTRY_MAP
 	public static Map<String, String> countryMap = new HashMap<String, String>()
