@@ -18,10 +18,9 @@ public class Dict
 	@Autowired
 	private VipMemInfoDao dao;
 	
-	// SPRING_MAIL_USERNAME
-	public static String SPRING_MAIL_USERNAME = PropertiesUtil.getValue("config/", "spring.mail.username");
 	public static String DATE_EXCEL_FORMAT = PropertiesUtil.getValue("config/", "date.excel.format");
 	public static String DATE_APP_FORMAT = PropertiesUtil.getValue("config/", "date.app.format");
+	public static String MAIL_DELIVER = PropertiesUtil.getValue("config/", "mail.deliver");
 	public static String MAIL_TEMPLATE_PREFIX = PropertiesUtil.getValue("config/", "mail.template.prefix");
 	public static String MAIL_PRIVACY_POLICY_URL = PropertiesUtil.getValue("config/", "mail.privacy.policy.url");
 	public static String MAIL_PRIVACY_POLICY_KEY = PropertiesUtil.getValue("config/", "mail.privacy.policy.key");

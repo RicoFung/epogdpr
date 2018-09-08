@@ -133,7 +133,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 			Locale locale = new Locale(lang.split("_")[0], lang.split("_")[1]);
 			List<VipMemInfo> list = entry.getValue();
 		    // 设置邮件信息-发送者
-			String deliver = Dict.SPRING_MAIL_USERNAME;
+			String deliver = Dict.MAIL_DELIVER;
 			// 设置邮件信息-多语言主题
 			String subject = source.getMessage("mail.subject", null, locale);
 			// 设置邮件信息-多语言模板
