@@ -6,15 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title></title>
+<link rel="stylesheet" href="${statics}/res/bs/css/bootstrap.css"/>
 <link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
 <script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
 <script type="text/javascript" src="${statics}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="${statics}/res/bs/js/bootstrap.min.js"></script>
 <style type="text/css">
 a{color:black; text-decoration:none; font-weight:bold;}
 a:hover, a:visited, a:link, a:active {}
-.title{font-family:"Times New Roman",Times,serif; font-size:100px;}
-.subtitle{font-size:30px; padding:5px;}
-.content{height:60%; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-top:solid 1px gray; border-bottom:solid 1px gray}
+.title{height:20%; font-family:"Times New Roman",Times,serif; font-size:100px;}
+.subtitle{height:10%; font-size:30px; padding:5px;}
+.content{height:60%; padding:5px; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-top:solid 1px gray; border-bottom:solid 1px gray}
 .catalog{list-style:none;}
 .catalog li{margin-left:3px; margin-top:3px;}
 .catalog-link {
@@ -35,7 +37,7 @@ a:hover, a:visited, a:link, a:active {}
 	background-color: white;
 	padding: 0 20px 0 5px;
 }
-.bottom{margin: 10px;}
+.bottom{height:10%; margin: 10px;}
 .bottom label{margin-right:100px;}
 #btn_confirm{width:100px; height:50px; font-size:20px; text-align:center;}
 </style>

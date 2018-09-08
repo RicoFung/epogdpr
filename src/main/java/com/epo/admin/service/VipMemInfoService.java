@@ -1,5 +1,6 @@
 package com.epo.admin.service;
 
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -154,6 +155,10 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 				try
 				{
 					clientToken = EncryptionUtil.encodeAES(item.getMemberCode(), Dict.MAIL_PRIVACY_POLICY_KEY);
+					// 需 URL 转码
+					log.info("(clientToken) URLEncoder before:"+clientToken);
+					clientToken = URLEncoder.encode(clientToken, "UTF-8");
+					log.info("(clientToken) URLEncoder after:"+clientToken);
 				}
 				catch (Exception e)
 				{
