@@ -8,38 +8,11 @@
 <title></title>
 <link rel="stylesheet" href="${statics}/res/bs/css/bootstrap.css"/>
 <link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
+<link rel="stylesheet" href="${jspstatics}/client/vippolicyfeedback/get.css" />
 <script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
 <script type="text/javascript" src="${statics}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="${statics}/res/bs/js/bootstrap.min.js"></script>
 <style type="text/css">
-a{color:black; text-decoration:none; font-weight:bold;}
-a:hover, a:visited, a:link, a:active {}
-.title{height:20%; font-family:"Times New Roman",Times,serif; font-size:100px;}
-.subtitle{height:10%; font-size:30px; padding:5px;}
-.content{height:60%; padding:5px; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; border-top:solid 1px gray; border-bottom:solid 1px gray}
-.catalog{list-style:none;}
-.catalog li{margin-left:3px; margin-top:3px;}
-.catalog-link {
-	position: relative;
-	display: block;
-	width: 100%;
-	background: transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAlklEQVQ4T2NkoBAwUqifYTgbMGfOHKG/f/8GgcKImZl5XUpKyjts4YU1DKZOnSrBwsJygYGBQRyq6SUDA4NOenr6G3RDsBowc+bMHAYGhsloinPT09On0MeA6dOnKzAyMt5mZGRkAdn4////P////1fNzMx8QJQLQIrmzJkj//fvX1doIO5OSUl5SHQgkpI6h3NKJDYcAN1aLBFNKflzAAAAAElFTkSuQmCC") repeat-x center 80%; 
-	overflow: hidden;
-	background-size: 4px 4px;
- }
-.catalog-text {
-	float: left;
-	background-color: white;
-	padding-right: 5px;
-}
-.catalog-pages {
-	float: right;
-	background-color: white;
-	padding: 0 20px 0 5px;
-}
-.bottom{height:10%; margin: 10px;}
-.bottom label{margin-right:100px;}
-#btn_confirm{width:100px; height:50px; font-size:20px; text-align:center;}
 </style>
 <script type="text/javascript">
 $(function(){

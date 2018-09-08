@@ -14,15 +14,19 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class WebMvcConfig implements WebMvcConfigurer
 {
 	@Value("${static.path}")
-	private String STATIC_PATH;
+	private String	STATIC_PATH;
 	@Value("${static.doBase}")
-	private String STATIC_DOBASE;
+	private String	STATIC_DOBASE;
+	@Value("${jsp.static.path}")
+	private String	JSP_STATIC_PATH;
+	@Value("${jsp.static.doBase}")
+	private String	JSP_STATIC_DOBASE;
 	@Value("${spring.mvc.view.prefix}")
-	private String SPRING_MVC_VIEW_PREFIX;
+	private String	SPRING_MVC_VIEW_PREFIX;
 	@Value("${spring.mvc.view.suffix}")
-	private String SPRING_MVC_VIEW_SUFFIX;
+	private String	SPRING_MVC_VIEW_SUFFIX;
 	@Value("${spring.mvc.view.view-name}")
-	private String SPRING_MVC_VIEW_VIEWNAME;
+	private String	SPRING_MVC_VIEW_VIEWNAME;
 
 	/**
 	 * 配置默认页
@@ -45,6 +49,7 @@ public class WebMvcConfig implements WebMvcConfigurer
 		 * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
 		 */
 		registry.addResourceHandler(STATIC_PATH).addResourceLocations("file:" + STATIC_DOBASE);
+		registry.addResourceHandler(JSP_STATIC_PATH).addResourceLocations(JSP_STATIC_DOBASE);
 	}
 
 	/**
@@ -76,4 +81,10 @@ public class WebMvcConfig implements WebMvcConfigurer
 		return resolver;
 	}
 
+//	@Override
+//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
+//	{
+//		configurer.
+//		configurer.enable();
+//	}
 }

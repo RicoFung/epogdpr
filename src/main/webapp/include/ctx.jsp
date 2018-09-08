@@ -5,6 +5,7 @@
 String ctx = request.getContextPath();
 request.setAttribute("ctx", ctx);
 request.setAttribute("statics", ctx+"/static");
+request.setAttribute("jspstatics", ctx+"/jspstatic");
 %>
 <script type="text/javascript">
 var $ctx="${ctx}";
