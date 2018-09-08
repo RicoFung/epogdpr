@@ -84,14 +84,6 @@ public class VipMemInfoAction extends BaseController<VipMemInfo>
 		printJson(result);
 	}
 	
-	@RequestMapping("/get")
-	public String get()
-	{
-		put("po", service.get(req.getLong("id")));
-		put("queryParams", req.getParameterValueMap(false, true));
-		return "jsp/admin/vipmeminfo/get";
-	}
-
 	@RequestMapping("/query")
 	public String query()
 	{

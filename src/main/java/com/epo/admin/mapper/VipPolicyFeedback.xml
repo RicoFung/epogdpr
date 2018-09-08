@@ -4,6 +4,11 @@
 
 <mapper namespace="com.epo.admin.entity.VipPolicyFeedback">
 	
+	<delete id="del" parameterType="com.epo.admin.entity.VipPolicyFeedback">
+		delete from vip_policy_feedback
+		 where member_code = #{memberCode}  	  
+	</delete>
+	
 	<resultMap type="com.epo.admin.entity.VipPolicyFeedback" id="result">
         <id property="idFeedback" column="id_feedback"/>
         <result property="memberCode" column="member_code"/>

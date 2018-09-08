@@ -7,7 +7,7 @@ import chok.devwork.springboot.BaseDao;
 import com.epo.admin.entity.VipPolicyFeedback;
 
 @Repository
-public class VipPolicyFeedbackDao extends BaseDao<VipPolicyFeedback,Long>
+public class VipPolicyFeedbackDao extends BaseDao<VipPolicyFeedback, String>
 {
 	@Resource//(name = "firstSqlSessionTemplate")
 	private SqlSession sqlSession;

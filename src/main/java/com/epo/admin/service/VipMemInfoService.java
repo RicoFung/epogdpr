@@ -23,6 +23,7 @@ import com.common.Dict;
 import com.common.MailUtil;
 import com.epo.admin.dao.VipMemInfoDao;
 import com.epo.admin.dao.VipMemInfoErrDao;
+import com.epo.admin.dao.VipPolicyFeedbackDao;
 import com.epo.admin.entity.VipMemInfo;
 import com.epo.admin.entity.VipMemInfoErr;
 
@@ -36,7 +37,7 @@ import chok.util.UniqueId;
 import chok.util.ValidationUtil;
 
 @Service
-public class VipMemInfoService extends BaseService<VipMemInfo, Long>
+public class VipMemInfoService extends BaseService<VipMemInfo, String>
 {
 	static Logger log = LoggerFactory.getLogger(VipMemInfoService.class);
 
@@ -46,9 +47,11 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	private VipMemInfoDao vipMemInfoDao;
 	@Autowired
 	private VipMemInfoErrDao vipMemInfoErrDao;
+	@Autowired
+	VipPolicyFeedbackDao vipPolicyFeedbackDao;
 
 	@Override
-	public BaseDao<VipMemInfo, Long> getEntityDao()
+	public BaseDao<VipMemInfo, String> getEntityDao()
 	{
 		return vipMemInfoDao;
 	}
@@ -334,6 +337,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, Long>
 	{
 		for(String memberCode: memberCodes)
 		{
+			vipPolicyFeedbackDao.del(memberCode);
 			vipMemInfoDao.del(memberCode);
 		}
 	}
