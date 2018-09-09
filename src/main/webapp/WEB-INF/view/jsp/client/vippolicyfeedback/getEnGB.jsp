@@ -8,60 +8,16 @@
 <title></title>
 <link rel="stylesheet" href="${statics}/res/bs/css/bootstrap.css"/>
 <link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
-<link rel="stylesheet" href="${jspstatics}/client/vippolicyfeedback/get.css" />
+<link rel="stylesheet" href="${jspstatics}${jspaction}.css" />
 <script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
 <script type="text/javascript" src="${statics}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="${statics}/res/bs/js/bootstrap.min.js"></script>
-<style type="text/css">
-</style>
+<script type="text/javascript" src="${jspstatics}${jspaction}.js"></script>
 <script type="text/javascript">
-$(function(){
-	var param = {
-		browserAgent: getBrowserAgent(),
-		clientToken: "${clientToken}",
-		lang: "en_GB"
-	};
-	$("#btn_submit").click(function(){
-		var feedback = $("input[name='rd_feedback']:checked").val();
-		$.get("http://ipinfo.io", function(response) {
-			$.extend(param, {
-				clientIp: response.ip,
-				clientSendTime: getCurrentDate(new Date()),
-				feedbackResult: feedback
-			});
-			$.post("feedback", param, function(result){
-    	        if(!result.success) {
-    	        	$.alert({title: "${i18nAttention}", type:"red", content: result.msg});
-    	        	return;
-    	        }
-	        	$.alert({title: "${i18nRemind}", type:"green", content: result.msg});
-			});
-		}, "jsonp");
-	});
-	
-	function getCurrentDate(date){
-	    var y = date.getFullYear();
-	    var m = date.getMonth()+1;
-	    var d = date.getDate();
-	    var h = date.getHours();
-	    var min = date.getMinutes();
-	    var s = date.getSeconds();
-	    var str=y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+'  '+(h<10?('0'+h):h)+':'+(min<10?('0'+min):min)+':'+(s<10?('0'+s):s);
-	    return str;
-	}
-	
-	function getBrowserAgent() {
-		var Sys={}; 
-	    var ua=navigator.userAgent.toLowerCase(); 
-	    var s; 
-	    (s=ua.match(/msie ([\d.]+)/))?Sys.ie=s[1]: 
-	    (s=ua.match(/firefox\/([\d.]+)/))?Sys.firefox=s[1]: 
-	    (s=ua.match(/chrome\/([\d.]+)/))?Sys.chrome=s[1]: 
-	    (s=ua.match(/opera.([\d.]+)/))?Sys.opera=s[1]: 
-	    (s=ua.match(/version\/([\d.]+).*safari/))?Sys.safari=s[1]:0; 
-		return s[0];
-	}
-});
+var $clientToken = "${clientToken}";
+var $lang = "en_GB";
+var $i18nAttention = "${i18nAttention}";
+var $i18nRemind = "${i18nRemind}";
 </script>
 </head>
 <body>

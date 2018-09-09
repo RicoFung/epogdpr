@@ -88,6 +88,7 @@ public class VipPolicyFeedbackAction extends BaseController<VipPolicyFeedback>
 		put("i18nSubmit", source.getMessage("submit", null, locale));
 		put("i18nAttention", source.getMessage("attention", null, locale));
 		put("i18nRemind", source.getMessage("remind", null, locale));
+		put("jspaction", req.getServletPath());
 		String suffix = lang.split("_")[0].substring(0, 1).toUpperCase() + lang.substring(1).split("_")[0] + lang.substring(1).split("_")[1];
 		return "jsp/client/vippolicyfeedback/get"+suffix;
 	}
