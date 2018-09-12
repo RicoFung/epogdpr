@@ -15,12 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.common.Dict;
-import com.common.MailUtil;
+//import com.common.MailUtil;
 import com.epo.admin.dao.VipMemInfoDao;
 import com.epo.admin.dao.VipMemInfoErrDao;
 import com.epo.admin.dao.VipPolicyFeedbackDao;
@@ -31,6 +33,7 @@ import chok.devwork.Result;
 import chok.devwork.springboot.BaseDao;
 import chok.devwork.springboot.BaseService;
 import chok.util.EncryptionUtil;
+import chok.util.MailUtil;
 import chok.util.POIUtil;
 import chok.util.TimeUtil;
 import chok.util.UniqueId;
@@ -42,24 +45,30 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 	static Logger log = LoggerFactory.getLogger(VipMemInfoService.class);
 
 	@Autowired
-	MessageSource source;
+	private JavaMailSender mailSender;
 	@Autowired
-	private VipMemInfoDao vipMemInfoDao;
+	private TemplateEngine templateEngine;
 	@Autowired
-	private VipMemInfoErrDao vipMemInfoErrDao;
+	MessageSource				source;
 	@Autowired
-	VipPolicyFeedbackDao vipPolicyFeedbackDao;
+	private VipMemInfoDao		vipMemInfoDao;
+	@Autowired
+	private VipMemInfoErrDao	vipMemInfoErrDao;
+	@Autowired
+	VipPolicyFeedbackDao		vipPolicyFeedbackDao;
 
 	@Override
 	public BaseDao<VipMemInfo, String> getEntityDao()
 	{
 		return vipMemInfoDao;
 	}
-	
+
 	/**
 	 * 上传
+	 * 
 	 * @param files
-	 * @return Map<String, Object> {"sucRows":List<VipMemInfo>, "errRows":List<VipMemInfoErr>, "rowid":rowid}
+	 * @return Map<String, Object> {"sucRows":List<VipMemInfo>,
+	 *         "errRows":List<VipMemInfoErr>, "rowid":rowid}
 	 * @throws Exception
 	 */
 	public Map<String, Object> imp2(CommonsMultipartFile files[]) throws Exception
@@ -76,7 +85,8 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 			for (int j = 0; j < sucRows.size(); j++)
 			{
 				VipMemInfo po = sucRows.get(j);
-				po.setJoinDate(TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA));
+				po.setJoinDate(TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH,
+						Dict.DATE_APP_FORMAT, Locale.CHINA));
 				vipMemInfoDao.add(po);
 			}
 		}
@@ -103,52 +113,57 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 		}
 		return resultMap;
 	}
-	
+
 	/**
 	 * 获取上传时，不合法数据
+	 * 
 	 * @param m
 	 * @return
 	 */
 	public List<VipMemInfoErr> queryErr(Map<String, Object> m)
 	{
 		List<VipMemInfoErr> list = vipMemInfoErrDao.query(m);
-//		vipMemInfoErrDao.del(Long.valueOf(m.get("rowid").toString())); // 用户读取失败数据后立即删除
+		// vipMemInfoErrDao.del(Long.valueOf(m.get("rowid").toString())); //
+		// 用户读取失败数据后立即删除
 		return list;
 	}
-	
+
 	/**
 	 * 发送邮件
+	 * 
 	 * @param sendEmail
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public Result sendEmail(List<VipMemInfo> vipMemInfos) //throws Exception
+	public Result sendEmail(List<VipMemInfo> vipMemInfos) // throws Exception
 	{
 		Result r = new Result();
 		// 按country分组
-		Map<String, List<VipMemInfo>> vipMemInfoGroup =vipMemInfos.stream().collect(Collectors.groupingBy(VipMemInfo::getCountry));
+		Map<String, List<VipMemInfo>> vipMemInfoGroup = vipMemInfos.stream()
+				.collect(Collectors.groupingBy(VipMemInfo::getCountry));
 		// 按country分组选择template并发送邮件
-		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet()) 
+		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet())
 		{
 			String lang = entry.getKey();
 			Locale locale = new Locale(lang.split("_")[0], lang.split("_")[1]);
 			List<VipMemInfo> list = entry.getValue();
-		    // 设置邮件信息-发送者
+			// 设置邮件信息-发送者
 			String deliver = Dict.MAIL_DELIVER;
 			// 设置邮件信息-多语言主题
 			String subject = source.getMessage("mail.subject", null, locale);
 			// 设置邮件信息-多语言模板
 			String template = Dict.MAIL_TEMPLATE_PREFIX + "_" + lang.toLowerCase();
 			// 遍历 分组后的 List<VipMemInfo> 发送邮件
-			list.forEach(item->{
+			list.forEach(item ->
+			{
 				// 验证重复发送邮件
 				if (item.getSendStatus().equals("1"))
 				{
 					r.setSuccess(false);
-					r.setMsg("("+item.getMemberCode()+")邮件已发送, 不能重复发送！");
+					r.setMsg("(" + item.getMemberCode() + ")邮件已发送, 不能重复发送！");
 					return;
 				}
 				// 设置邮件信息-接收者
-				String[] receiver = new String[] {item.getEmail()};
+				String[] receiver = new String[] { item.getEmail() };
 				// 设置邮件信息-抄送者
 				String[] carbonCopy = null;
 				// 设置邮件信息-模板上下文（用于模板变量赋值）
@@ -159,9 +174,9 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 				{
 					clientToken = EncryptionUtil.encodeAES(item.getMemberCode(), Dict.MAIL_PRIVACY_POLICY_KEY);
 					// 需 URL 转码
-					log.info("(clientToken) URLEncoder before:"+clientToken);
+					log.info("(clientToken) URLEncoder before:" + clientToken);
 					clientToken = URLEncoder.encode(clientToken, "UTF-8");
-					log.info("(clientToken) URLEncoder after:"+clientToken);
+					log.info("(clientToken) URLEncoder after:" + clientToken);
 				}
 				catch (Exception e)
 				{
@@ -171,18 +186,16 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 					r.setMsg(e.getMessage());
 				}
 				// 生成token失败，不往下执行
-				if (!r.isSuccess()) return; 
+				if (!r.isSuccess())
+					return;
 				// 2. 设置邮件中 privacy policy 超链接
-				context.setVariable("privacy_policy_url", 
-									Dict.MAIL_PRIVACY_POLICY_URL
-									+ "clientToken=" + clientToken
-									+ "&"
-									+ "lang="+lang);
+				context.setVariable("privacy_policy_url",
+						Dict.MAIL_PRIVACY_POLICY_URL + "clientToken=" + clientToken + "&" + "lang=" + lang);
 				// 3. 发送邮件
 				String sendStatus = "0";
 				try
 				{
-					MailUtil.sendTemplateEmail(deliver, receiver, carbonCopy, subject, template, context);
+					MailUtil.sendTemplateEmail(mailSender, templateEngine, deliver, receiver, carbonCopy, subject, template, context);
 					sendStatus = "1";
 					r.setSuccess(true);
 					r.setMsg("发送成功！");
@@ -195,7 +208,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 					r.setSuccess(false);
 					r.setMsg(e.getMessage());
 				}
-				finally 
+				finally
 				{
 					item.setSendTime(TimeUtil.getCurrentTime());
 					vipMemInfoDao.updSendStatusByMemberCode(sendStatus, item.getMemberCode());
@@ -207,9 +220,10 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 
 	/**
 	 * 校验Row
+	 * 
 	 * @param rows
 	 * @return Map<String, List<VipMemInfo>>
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	private Map<String, List<VipMemInfo>> validateRows(List<String[]> rows) throws Exception
 	{
@@ -244,6 +258,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 
 	/**
 	 * 校验Cell
+	 * 
 	 * @param po
 	 * @return boolean
 	 */
@@ -269,7 +284,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 				po.setMsg(po.getMsg() + "(MemberCode already exists)");
 			}
 		}
-		
+
 		if (StringUtils.isBlank(po.getEmail()))
 		{
 			po.setPassed(false);
@@ -305,7 +320,8 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 		{
 			try
 			{
-				TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA);
+				TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT,
+						Locale.CHINA);
 			}
 			catch (ParseException e)
 			{
@@ -328,14 +344,15 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 		}
 		return po.getPassed();
 	}
-	
+
 	/**
 	 * 删除
+	 * 
 	 * @param memberCodes
 	 */
 	public void del(String[] memberCodes)
 	{
-		for(String memberCode: memberCodes)
+		for (String memberCode : memberCodes)
 		{
 			vipPolicyFeedbackDao.del(memberCode);
 			vipMemInfoDao.del(memberCode);

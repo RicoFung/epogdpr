@@ -19,18 +19,8 @@
 	</properties>
 
 	<dependencies>
-		<!-- spring-boot thymeleaf -->
-		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-thymeleaf</artifactId></dependency>
-		<!-- spring-boot test支持  -->
-		<dependency><groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-test</artifactId><scope>test</scope></dependency>
-		<!-- spring-boot mail -->
-		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-mail</artifactId></dependency>
 		<!-- spring-boot druid -->
 		<dependency><groupId>com.alibaba</groupId><artifactId>druid-spring-boot-starter</artifactId></dependency>
-		<!-- spring-boot-security 
-		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-security</artifactId></dependency>
-		<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-properties-migrator</artifactId></dependency>
-		-->
 		<!-- chok -->
 		<dependency><groupId>com.chok</groupId><artifactId>chok-devwork</artifactId></dependency>
 		<!-- db driver myql-->
