@@ -85,8 +85,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 			for (int j = 0; j < sucRows.size(); j++)
 			{
 				VipMemInfo po = sucRows.get(j);
-				po.setJoinDate(TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH,
-						Dict.DATE_APP_FORMAT, Locale.CHINA));
+				po.setJoinDate(TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA));
 				vipMemInfoDao.add(po);
 			}
 		}
@@ -138,8 +137,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 	{
 		Result r = new Result();
 		// 按country分组
-		Map<String, List<VipMemInfo>> vipMemInfoGroup = vipMemInfos.stream()
-				.collect(Collectors.groupingBy(VipMemInfo::getCountry));
+		Map<String, List<VipMemInfo>> vipMemInfoGroup = vipMemInfos.stream().collect(Collectors.groupingBy(VipMemInfo::getCountry));
 		// 按country分组选择template并发送邮件
 		for (Entry<String, List<VipMemInfo>> entry : vipMemInfoGroup.entrySet())
 		{
@@ -189,8 +187,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 				if (!r.isSuccess())
 					return;
 				// 2. 设置邮件中 privacy policy 超链接
-				context.setVariable("privacy_policy_url",
-						Dict.MAIL_PRIVACY_POLICY_URL + "clientToken=" + clientToken + "&" + "lang=" + lang);
+				context.setVariable("privacy_policy_url", Dict.MAIL_PRIVACY_POLICY_URL + "clientToken=" + clientToken + "&" + "lang=" + lang);
 				context.setVariable("bottom_logo_url", Dict.MAIL_BOTTOM_LOGO_URL);
 				// 3. 发送邮件
 				String sendStatus = "0";
@@ -321,8 +318,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 		{
 			try
 			{
-				TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT,
-						Locale.CHINA);
+				TimeUtil.toggleFormat(po.getJoinDate(), Dict.DATE_EXCEL_FORMAT, Locale.ENGLISH, Dict.DATE_APP_FORMAT, Locale.CHINA);
 			}
 			catch (ParseException e)
 			{

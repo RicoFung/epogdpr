@@ -21,6 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer
 	private String	STATIC_PATH_INTERNAL;
 	@Value("${static.doBase.internal}")
 	private String	STATIC_DOBASE_INTERNAL;
+	@Value("${img.path.internal}")
+	private String	IMG_PATH_INTERNAL;
+	@Value("${img.doBase.internal}")
+	private String	IMG_DOBASE_INTERNAL;
 	@Value("${spring.mvc.view.prefix}")
 	private String	SPRING_MVC_VIEW_PREFIX;
 	@Value("${spring.mvc.view.suffix}")
@@ -53,7 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer
 		 */
 		registry.addResourceHandler(STATIC_PATH_EXTERNAL).addResourceLocations(STATIC_DOBASE_EXTERNAL);
 		registry.addResourceHandler(STATIC_PATH_INTERNAL).addResourceLocations(STATIC_DOBASE_INTERNAL);
-		registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/");
+		registry.addResourceHandler(IMG_PATH_INTERNAL).addResourceLocations(IMG_DOBASE_INTERNAL);
 	}
 
 	/**
