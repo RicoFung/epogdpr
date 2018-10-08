@@ -5,13 +5,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <title></title>
-<link rel="stylesheet" href="${statics}/res/bs/css/bootstrap.css"/>
-<link rel="stylesheet" href="${statics}/res/jquery/third/confirm/jquery-confirm.min.css" />
-<link rel="stylesheet" href="${jspstatics}${jspaction}.css" />
-<script type="text/javascript" src="${statics}/res/jquery/jquery.js"></script>
-<script type="text/javascript" src="${statics}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
-<script type="text/javascript" src="${statics}/res/bs/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${jspstatics}${jspaction}.js"></script>
+<link rel="stylesheet" href="${staticexternal}/res/bs/css/bootstrap.css"/>
+<link rel="stylesheet" href="${staticexternal}/res/jquery/third/confirm/jquery-confirm.min.css" />
+<link rel="stylesheet" href="${staticinternal}${jspaction}.css" />
+<script type="text/javascript" src="${staticexternal}/res/jquery/jquery.js"></script>
+<script type="text/javascript" src="${staticexternal}/res/jquery/third/confirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="${staticexternal}/res/bs/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${staticinternal}${jspaction}.js"></script>
 <script type="text/javascript">
 var $clientToken = "${clientToken}";
 var $lang = "fr_FR";
@@ -121,8 +121,8 @@ var $i18nRemind = "${i18nRemind}";
 		</div>
 	</div>
 	<div align="left" class="bottom">
-		<input type="radio" name="rd_feedback" id="rd_feedback1" value="A"/><label for="rd_feedback1">${i18nAccept}</label>
-		<input type="radio" name="rd_feedback" id="rd_feedback2" value="R" checked="checked"/><label for="rd_feedback2">${i18nReject}</label>
+		<input type="radio" name="rd_feedback" id="rd_feedback1" value="A" checked="checked"/><label for="rd_feedback1">${i18nAccept}</label>
+		<input type="radio" name="rd_feedback" id="rd_feedback2" value="R"/><label for="rd_feedback2">${i18nReject}</label>
 		<div align="center" class="btn_submit">
 			<input type="button" id="btn_submit" value="${i18nSubmit}"/>
 		</div>

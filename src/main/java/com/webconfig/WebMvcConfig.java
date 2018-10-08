@@ -13,14 +13,14 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer
 {
-	@Value("${static.path}")
-	private String	STATIC_PATH;
-	@Value("${static.doBase}")
-	private String	STATIC_DOBASE;
-	@Value("${jsp.static.path}")
-	private String	JSP_STATIC_PATH;
-	@Value("${jsp.static.doBase}")
-	private String	JSP_STATIC_DOBASE;
+	@Value("${static.path.external}")
+	private String	STATIC_PATH_EXTERNAL;
+	@Value("${static.doBase.external}")
+	private String	STATIC_DOBASE_EXTERNAL;
+	@Value("${static.path.internal}")
+	private String	STATIC_PATH_INTERNAL;
+	@Value("${static.doBase.internal}")
+	private String	STATIC_DOBASE_INTERNAL;
 	@Value("${spring.mvc.view.prefix}")
 	private String	SPRING_MVC_VIEW_PREFIX;
 	@Value("${spring.mvc.view.suffix}")
@@ -34,8 +34,11 @@ public class WebMvcConfig implements WebMvcConfigurer
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
-		registry.addViewController("/").setViewName("forward:/index.jsp"); // 设置默认首页(必须加入“forward:”,
-																			// 否则会访问spring.mvc.view.prefix所指定的目录)
+		/*
+		 * 设置默认首页(必须加入“forward:”,
+		 * 否则会访问spring.mvc.view.prefix所指定的目录)
+		 */
+		registry.addViewController("/").setViewName("forward:/index.jsp"); 
 	}
 
 	/**
@@ -48,8 +51,9 @@ public class WebMvcConfig implements WebMvcConfigurer
 		 * 说明：增加虚拟路径(经过本人测试：在此处配置的虚拟路径，用springboot内置的tomcat时有效，
 		 * 用外部的tomcat也有效;所以用到外部的tomcat时不需在tomcat/config下的相应文件配置虚拟路径了,阿里云linux也没问题)
 		 */
-		registry.addResourceHandler(STATIC_PATH).addResourceLocations("file:" + STATIC_DOBASE);
-		registry.addResourceHandler(JSP_STATIC_PATH).addResourceLocations(JSP_STATIC_DOBASE);
+		registry.addResourceHandler(STATIC_PATH_EXTERNAL).addResourceLocations(STATIC_DOBASE_EXTERNAL);
+		registry.addResourceHandler(STATIC_PATH_INTERNAL).addResourceLocations(STATIC_DOBASE_INTERNAL);
+		registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/");
 	}
 
 	/**
@@ -80,11 +84,4 @@ public class WebMvcConfig implements WebMvcConfigurer
 		resolver.setOrder(2);
 		return resolver;
 	}
-
-//	@Override
-//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
-//	{
-//		configurer.
-//		configurer.enable();
-//	}
 }

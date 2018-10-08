@@ -191,6 +191,7 @@ public class VipMemInfoService extends BaseService<VipMemInfo, String>
 				// 2. 设置邮件中 privacy policy 超链接
 				context.setVariable("privacy_policy_url",
 						Dict.MAIL_PRIVACY_POLICY_URL + "clientToken=" + clientToken + "&" + "lang=" + lang);
+				context.setVariable("bottom_logo_url", Dict.MAIL_BOTTOM_LOGO_URL);
 				// 3. 发送邮件
 				String sendStatus = "0";
 				try

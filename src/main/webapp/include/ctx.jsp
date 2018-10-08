@@ -4,8 +4,8 @@
 <%
 String ctx = request.getContextPath();
 request.setAttribute("ctx", ctx);
-request.setAttribute("statics", ctx+"/static");
-request.setAttribute("jspstatics", ctx+"/jspstatic");
+request.setAttribute("staticexternal", ctx+"/staticexternal");
+request.setAttribute("staticinternal", ctx+"/staticinternal");
 %>
 <script type="text/javascript">
 var $ctx="${ctx}";
