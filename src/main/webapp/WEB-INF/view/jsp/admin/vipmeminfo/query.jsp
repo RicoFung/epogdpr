@@ -54,6 +54,9 @@
 			<label for="f_memberCode">memberCode：</label><input type="text" class="form-control input-sm" id="f_memberCode"/>
 		</div>
 		<div class="form-group">
+			<label for="f_storeCode">email：</label><input type="text" class="form-control input-sm" id="f_email"/>
+		</div>
+		<div class="form-group">
 			<label for="f_storeCode">storeCode：</label><input type="text" class="form-control input-sm" id="f_storeCode"/>
 		</div>
 		<div class="form-group">
@@ -111,6 +114,7 @@ $(function() {
 /**********************************************************/
 $chok.view.query.config.setPreFormParams = function(){
 	$("#f_memberCode").val(typeof("${queryParams.f_memberCode}")=="undefined"?"":"${queryParams.f_memberCode}");
+	$("#f_email").val(typeof("${queryParams.f_email}")=="undefined"?"":"${queryParams.f_email}");
 	$("#f_storeCode").val(typeof("${queryParams.f_storeCode}")=="undefined"?"":"${queryParams.f_storeCode}");
 	$("#f_country").val(typeof("${queryParams.f_country}")=="undefined"?"":"${queryParams.f_country}");
 	$("#f_joinDateFm").val(typeof("${queryParams.f_joinDateFm}")=="undefined"?"":"${queryParams.f_joinDateFm}");
@@ -119,6 +123,7 @@ $chok.view.query.config.setPreFormParams = function(){
 };
 $chok.view.query.config.formParams = function(p){
 	p.memberCode = $("#f_memberCode").val();
+	p.email = $("#f_email").val();
 	p.storeCode = $("#f_storeCode").val();
 	p.country = $("#f_country").val();
 	p.joinDateFm = $("#f_joinDateFm").val();
@@ -129,6 +134,7 @@ $chok.view.query.config.formParams = function(p){
 $chok.view.query.config.urlParams = function(){
 	return {
 			f_memberCode : $("#f_memberCode").val(),
+			f_email : $("#f_email").val(),
 			f_storeCode : $("#f_storeCode").val(),
 			f_country : $("#f_country").val(),
 			f_joinDateFm : $("#f_joinDateFm").val(),
