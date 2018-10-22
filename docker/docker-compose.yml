@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql-epo:
+    image: mysql:5.7
+    container_name: mysql-epo
+    expose:
+      - "22"
+    ports:
+      - '3306:3306'
+    volumes:
+      - /usr/local/apps/docker/mysql/data:/var/lib/mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=123456
+      - LANG=C.UTF-8
+  app-epogdpr:
+    image: tomcat:8.5
+    container_name: epogdpr
+    depends_on:
+      - mysql-epo
+    links:
+      - mysql-epo
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    expose:
+      - "22"
+    volumes:
+      -  /usr/local/apps/docker/epogdpr/logs:/usr/local/tomcat/logs
+      -  /usr/local/apps/docker/epogdpr/webapps:/usr/local/tomcat/webapps
+    command: ["catalina.sh", "run"]
