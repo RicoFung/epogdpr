@@ -6,7 +6,7 @@ $(function(){
 	};
 	$("#btn_submit").click(function(){
 		var feedback = $("input[name='rd_feedback']:checked").val();
-		$.get("http://ipinfo.io", function(response) {
+		$.get("https://ipinfo.io", function(response) {
 			$.extend(param, {
 				clientIp: response.ip,
 				clientSendTime: getCurrentDate(new Date()),
